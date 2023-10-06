@@ -13,10 +13,16 @@ type
   end;
 
   TSieVoucher = class(TSieVoucherBase)
-
+  public
+    constructor Create(); override;
   end;
 
 implementation
+
+constructor TSieVoucher.Create();
+begin
+  self.Rows := TListSieVoucherRowBase.Create();
+end;
 
 end.
 

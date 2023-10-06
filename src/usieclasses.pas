@@ -9,6 +9,20 @@ uses
 
 type
   TSieObjectBase = class;
+  TSieDimensionBase = class;
+  TSieVoucherRowBase = class;
+
+  THashSetString = specialize THashSet<string>;
+  THashSetSieDimensionBase = specialize THashSet<TSieDimensionBase>;
+  TDictStringSieObjectBase = specialize TDictionary<string, TSieObjectBase>;
+  TNullableCurrency = specialize TNullable<Currency>;
+  TNullableInteger = specialize TNullable<integer>;
+  TListSieObjectBase = specialize TList<TSieObjectBase>;
+  TListSieVoucherRowBase = specialize TList<TSieVoucherRowBase>;
+
+
+
+
 
   TSieAccountBase = class
   private
@@ -17,7 +31,7 @@ type
     Name: string;
     AccUnit: string;
     AccType: string;
-    SRU: specialize THashSet<string>;
+    SRU: THashSetString;
   end;
 
   TSieCompanyBase = class
@@ -54,8 +68,8 @@ type
     Number: string;
     Name: string;
     IsDefault: boolean;
-    SubDim: specialize THashSet<TSieDimensionBase>;
-    Objects: specialize TDictionary<string, TSieObjectBase>;
+    SubDim: THashSetSieDimensionBase;
+    Objects: TDictStringSieObjectBase;
 
   end;
 
@@ -74,27 +88,27 @@ type
     YearNr: integer;
     Period: integer;
     Amount: Currency;
-    Quantity: specialize TNullable<Currency>;
-    Objects: specialize TList<TSieObjectBase>;
+    Quantity: TNullableCurrency;
+    Objects: TListSieObjectBase;
     Token: string;
     function ToVoucherRow(): TSieDimensionBase; virtual; abstract;
   end;
 
   TSieBookingYearBase = class
     ID: integer;
-    StartDate:  specialize TNullable<integer>;
-    EndDate: specialize TNullable<integer>;
+    StartDate:  TNullableInteger;
+    EndDate: TNullableInteger;
   end;
 
   TSieVoucherRowBase = class
   private
   public
     Account: TSieAccountBase;
-    Objects: specialize TList<TSieObjectBase>;
+    Objects: TListSieObjectBase;
     Amount: Currency;
     RowDate:integer;
     Text: string;
-    Quantity: specialize TNullable<Currency>;
+    Quantity: TNullableCurrency;
     CreatedBy : string;
     Token: string;
   end;
@@ -109,7 +123,7 @@ type
     CreatedDate: integer;
     CreatedBy: string;
     Token: string;
-    Rows: specialize TList<TSieVoucherRowBase>;
+    Rows: TListSieVoucherRowBase;
     constructor Create(); virtual;abstract;
   end;
 
