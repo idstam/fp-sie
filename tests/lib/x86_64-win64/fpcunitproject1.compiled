@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe" Date="1449427374"/>
+  <Params Value=" -MObjFPC -Scghi -O1 -gw3 -gl -l -vewnhibq -FiC:\Users\johan\src\idstam\fp-sie\tests\lib\x86_64-win64 -FuC:\Users\johan\src\idstam\fp-sie\src -FuC:\lazarus\packager\units\x86_64-win64 -FuC:\Users\johan\src\idstam\fp-sie\tests\ -FUC:\Users\johan\src\idstam\fp-sie\tests\lib\x86_64-win64\ -FEC:\Users\johan\src\idstam\fp-sie\tests\ -oC:\Users\johan\src\idstam\fp-sie\tests\fpcunitproject1.exe fpcunitproject1.lpr"/>
+  <Complete Value="False"/>
+</CONFIG>

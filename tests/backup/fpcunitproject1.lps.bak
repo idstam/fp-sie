@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="fpcunitproject1.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="81" Y="6"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="testsiedocument.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestSieDocument"/>
+        <TopLine Value="3"/>
+        <CursorPos Y="24"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieDocument"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="7"/>
+        <CursorPos X="27" Y="19"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usiecompany.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieCompany"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="14"/>
+        <CursorPos X="30" Y="13"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usieaccount.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieAccount"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="5" Y="19"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usiedimension.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieDimension"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="9" Y="20"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usieobject.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieObject"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="34" Y="8"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="testsiedocument.pas"/>
+        <Caret Line="21" Column="20"/>
+      </Position>
+      <Position>
+        <Filename Value="fpcunitproject1.lpr"/>
+        <Caret Line="6" Column="60"/>
+      </Position>
+      <Position>
+        <Filename Value="testsiedocument.pas"/>
+        <Caret Line="21" Column="9" TopLine="2"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="18" Column="5"/>
+      </Position>
+      <Position>
+        <Filename Value="testsiedocument.pas"/>
+        <Caret Line="24" Column="42" TopLine="2"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="29" Column="5"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="17" Column="36" TopLine="3"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiecompany.pas"/>
+        <Caret Line="13" Column="32"/>
+      </Position>
+      <Position>
+        <Filename Value="fpcunitproject1.lpr"/>
+        <Caret Line="6" Column="74"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiecompany.pas"/>
+        <Caret Line="8" Column="42"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiecompany.pas"/>
+        <Caret Line="13" Column="20"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiecompany.pas"/>
+        <Caret Line="14" Column="30"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiecompany.pas"/>
+        <Caret Line="5"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiecompany.pas"/>
+        <Caret Line="11" Column="26"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="17" Column="5" TopLine="3"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="23" Column="32"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usieaccount.pas"/>
+        <Caret Line="18" Column="11"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usieaccount.pas"/>
+        <Caret Line="17" Column="6"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="8" Column="54" TopLine="2"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="17" Column="44" TopLine="2"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="8" Column="45" TopLine="4"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usieaccount.pas"/>
+        <Caret Line="19" Column="5"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedimension.pas"/>
+        <Caret Line="16" Column="23"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedimension.pas"/>
+        <Caret Line="13" Column="28"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="18" Column="42" TopLine="3"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedimension.pas"/>
+        <Caret Line="18" Column="31"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocument.pas"/>
+        <Caret Line="8" Column="60" TopLine="3"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedimension.pas"/>
+        <Caret Line="20" Column="5"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedimension.pas"/>
+        <Caret Line="18" Column="34"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedimension.pas"/>
+        <Caret Line="20" Column="9"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
