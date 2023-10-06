@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, USieClasses, Generics.Collections;
 
-
-TSieDimensionEx = class(TSieDimension)
+type
+  TSieDimension = class(TSieDimensionBase)
 private
 
 public

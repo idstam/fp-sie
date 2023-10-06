@@ -5,7 +5,7 @@ unit USieDocument;
 interface
 
 uses
-  Classes, SysUtils,USieClasses, Generics.Collections;
+  Classes, SysUtils,USieClasses, Generics.Collections, USieCompany, USieAccount, USieDimension, USiePeriodvalue, USieBookingYear, USieVoucher;
 
 type
   TSieDocument = class
@@ -16,17 +16,18 @@ type
     FNAMN:TSieCompany;
     KONTO: specialize  TDictionary<string, TSieAccount>;
     DIM: specialize  TDictionary<string, TSieDimension>;
-    OIB: specialize TList<SiePeriodValue>;
-    OUB: specialize TList<SiePeriodValue>;
-    PSALDO: specialize TList<SiePeriodValue>;
-    PBUDGET: specialize TList<SiePeriodValue>;
-    PROGRAM: specialize TList<string>;
+    OIB: specialize TList<TSiePeriodValue>;
+    OUB: specialize TList<TSiePeriodValue>;
+    PSALDO: specialize TList<TSiePeriodValue>;
+    PBUDGET: specialize TList<TSiePeriodValue>;
+    //#PROGRAM
+    PROGRAMS: specialize TList<string>;
     RAR: specialize  TDictionary<string, TSieBookingYear>;
     IB: specialize TList<TSiePeriodValue>;
     UB: specialize TList<TSiePeriodValue>;
     RES: specialize TList<TSiePeriodValue>;
     VER: specialize TList<TSieVoucher>;
-    ValidationExceptions: specialize TList<TSieErrors>;
+    ValidationExceptions: specialize TList<TSieError>;
     //CRC
 
     constructor Create();

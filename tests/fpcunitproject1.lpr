@@ -8,7 +8,8 @@ uses
   consoletestrunner,
   TestSieDocument,
   USieCompany,
-  unit1;
+  USieVoucher,
+  USieBookingYear;
 
 type
 

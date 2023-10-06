@@ -64,6 +64,21 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieClasses"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\usieperiodvalue.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USiePeriodValue"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usiebookingyear.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieBookingYear"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usievoucher.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieVoucher"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

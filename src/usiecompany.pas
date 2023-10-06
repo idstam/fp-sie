@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Generics.Collections, USieClasses;
-
-TSieCompanyEx = class(TSieCompany)
+type
+TSieCompany = class(TSieCompanyBase)
 private
   _orgTypeNames: specialize  TDictionary<string, string>;
   procedure fillOrgTypeNames();
@@ -17,7 +17,7 @@ public
 end;
 
 implementation
-  uses USieClasses;
+
   constructor TSieCompany.Create();
   begin
 

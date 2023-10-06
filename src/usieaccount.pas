@@ -5,10 +5,10 @@ unit USieAccount;
 interface
 
 uses
-  Classes, SysUtils, Generics.Collections;
+  Classes, SysUtils, Generics.Collections, USieClasses;
 
 type
-  TSieAccountEx = class(TSieAccount)
+  TSieAccount = class(TSieAccountBase)
   private
   public
   end;
