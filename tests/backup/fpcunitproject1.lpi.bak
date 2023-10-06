@@ -54,6 +54,16 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieDimension"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\usieobject.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieObject"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usieclasses.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieClasses"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

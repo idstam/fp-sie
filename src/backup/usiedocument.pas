@@ -5,7 +5,7 @@ unit USieDocument;
 interface
 
 uses
-  Classes, SysUtils,USieCompany,USieAccount, Generics.Collections;
+  Classes, SysUtils,USieCompany,USieAccount, USieDimension, Generics.Collections;
 
 type
   TSieDocument = class

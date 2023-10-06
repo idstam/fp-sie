@@ -5,17 +5,8 @@ unit USieObject;
 interface
 
 uses
-  Classes, SysUtils,USieDimension;
-
-type
-  TSieObject = class
-  private
-  public
-    Dimension: TSieDimension;
-    Number: string;
-    Name: string;
-  end;
+  Classes, SysUtils, USieClasses;
 
 implementation
-end.
 
+end.

@@ -5,11 +5,11 @@ unit TestSieDocument;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry,USieDocument;
+  Classes, SysUtils, fpcunit, testutils, testregistry, USieDocument;
 
 type
 
-  TTestSieDocument= class(TTestCase)
+  TTestSieDocument = class(TTestCase)
   published
     procedure TestHookUp;
   end;
@@ -30,4 +30,3 @@ initialization
 
   RegisterTest(TTestSieDocument);
 end.
-

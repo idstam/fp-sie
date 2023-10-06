@@ -7,36 +7,10 @@ interface
 uses
   Classes, SysUtils, Generics.Collections;
 
-type
-  TSieCompany = class
-  private
-    _orgTypeNames: specialize  TDictionary<string, string>;
-    procedure fillOrgTypeNames();
-  public
-    //#BKOD
-    SNI: integer;
 
-    //#FNAMN
-    Name: string;
-
-    //#FNR
-    Code: string;
-
-    //#FTYP
-    OrgType: string;
-
-    //#ORGNR
-    OrgIdentifier: string;
-
-    //#ADRESS
-    Contact: string;
-    Street: string;
-    ZipCity: string;
-    Phone: string;
-    constructor Create();
-  end;
 
 implementation
+  uses USieClasses;
   constructor TSieCompany.Create();
   begin
 
@@ -44,7 +18,7 @@ implementation
 
   procedure TSieCompany.fillOrgTypeNames();
   begin
-    _orgTypeNames.Add('AB', 'Aktiebolag.');
+    self._orgTypeNames.Add('AB', 'Aktiebolag.');
     _orgTypeNames.Add('E', 'Enskild näringsidkare.');
     _orgTypeNames.Add('HB', 'Handelsbolag.');
     _orgTypeNames.Add('KB', 'Kommanditbolag.');

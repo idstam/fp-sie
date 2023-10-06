@@ -5,39 +5,19 @@ unit USieCompany;
 interface
 
 uses
-  Classes, SysUtils, Generics.Collections;
+  Classes, SysUtils, Generics.Collections, USieClasses;
 
-type
-  TSieCompany = class
-  private
-    _orgTypeNames: specialize  TDictionary<string, string>;
-    procedure fillOrgTypeNames();
-  public
-    //#BKOD
-    SNI: integer;
+TSieCompanyEx = class(TSieCompany)
+private
+  _orgTypeNames: specialize  TDictionary<string, string>;
+  procedure fillOrgTypeNames();
+public
 
-    //#FNAMN
-    Name: string;
-
-    //#FNR
-    Code: string;
-
-    //#FTYP
-    OrgType: string;
-
-    //#ORGNR
-    OrgIdentifier: string;
-
-    //#ADRESS
-    Contact: string;
-    Street: string;
-    ZipCity: string;
-    Phone: string;
-
-    constructor Create();
-  end;
+  constructor Create();
+end;
 
 implementation
+  uses USieClasses;
   constructor TSieCompany.Create();
   begin
 
@@ -45,7 +25,7 @@ implementation
 
   procedure TSieCompany.fillOrgTypeNames();
   begin
-    _orgTypeNames.Add('AB', 'Aktiebolag.');
+    self._orgTypeNames.Add('AB', 'Aktiebolag.');
     _orgTypeNames.Add('E', 'Enskild näringsidkare.');
     _orgTypeNames.Add('HB', 'Handelsbolag.');
     _orgTypeNames.Add('KB', 'Kommanditbolag.');
