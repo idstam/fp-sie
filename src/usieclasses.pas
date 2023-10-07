@@ -14,15 +14,14 @@ type
 
   THashSetString = specialize THashSet<string>;
   THashSetSieDimensionBase = specialize THashSet<TSieDimensionBase>;
-  TDictStringSieObjectBase = specialize TDictionary<string, TSieObjectBase>;
+
   TNullableCurrency = specialize TNullable<Currency>;
   TNullableInteger = specialize TNullable<integer>;
+
   TListSieObjectBase = specialize TList<TSieObjectBase>;
   TListSieVoucherRowBase = specialize TList<TSieVoucherRowBase>;
 
-
-
-
+  TDictStringSieObjectBase = specialize TDictionary<string, TSieObjectBase>;
 
   TSieAccountBase = class
   private
@@ -70,7 +69,6 @@ type
     IsDefault: boolean;
     SubDim: THashSetSieDimensionBase;
     Objects: TDictStringSieObjectBase;
-
   end;
 
   TSieObjectBase = class

@@ -79,6 +79,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieVoucher"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieDataItem"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

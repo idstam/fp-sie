@@ -9,7 +9,8 @@ uses
   TestSieDocument,
   USieCompany,
   USieVoucher,
-  USieBookingYear;
+  USieBookingYear,
+  USieDataItem;
 
 type
 
