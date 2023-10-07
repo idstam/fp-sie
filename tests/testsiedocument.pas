@@ -20,16 +20,17 @@ implementation
 procedure TTestSieDocument.TestGetVersion;
 var
   doc: TSieDocument;
-  appFolder:string;
-  version:integer;
+  appFolder: string;
+  version: integer;
 begin
   appFolder := ExtractFilePath(ExtractFilePath(ParamStr(0)));
-  version := TSieDocument.GetSieVersion(appfolder + DirectorySeparator + 'sie_test_files' + DirectorySeparator + 'BokslutSIE1.se');
+  version := TSieDocument.GetSieVersion(appfolder + DirectorySeparator +
+    'sie_test_files' + DirectorySeparator + 'BokslutSIE1.se');
   AssertEquals(1, version);
 
-  version := TSieDocument.GetSieVersion(appfolder + DirectorySeparator + 'sie_test_files' + DirectorySeparator + 'MAMUT_SIE3_EXPORT.SE');
+  version := TSieDocument.GetSieVersion(appfolder + DirectorySeparator +
+    'sie_test_files' + DirectorySeparator + 'MAMUT_SIE3_EXPORT.SE');
   AssertEquals(3, version);
-
 
 end;
 

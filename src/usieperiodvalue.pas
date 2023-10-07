@@ -6,6 +6,7 @@ interface
 
 uses
   Classes, SysUtils, USieClasses;
+
 type
   TSiePeriodValue = class(TSiePeriodValueBase)
 
@@ -14,4 +15,3 @@ type
 implementation
 
 end.
-

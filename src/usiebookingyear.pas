@@ -7,10 +7,10 @@ interface
 uses
   Classes, SysUtils, USieClasses;
 
-type TSieBookingYear=class(TSieBookingYearBase)
+type
+  TSieBookingYear = class(TSieBookingYearBase)
   end;
 
 implementation
 
 end.
-

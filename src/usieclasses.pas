@@ -15,7 +15,7 @@ type
   THashSetString = specialize THashSet<string>;
   THashSetSieDimensionBase = specialize THashSet<TSieDimensionBase>;
 
-  TNullableCurrency = specialize TNullable<Currency>;
+  TNullableCurrency = specialize TNullable<currency>;
   TNullableInteger = specialize TNullable<integer>;
 
   TListSieObjectBase = specialize TList<TSieObjectBase>;
@@ -82,10 +82,10 @@ type
   TSiePeriodValueBase = class
   private
   public
-    Account : TSieAccountBase;
+    Account: TSieAccountBase;
     YearNr: integer;
     Period: integer;
-    Amount: Currency;
+    Amount: currency;
     Quantity: TNullableCurrency;
     Objects: TListSieObjectBase;
     Token: string;
@@ -94,7 +94,7 @@ type
 
   TSieBookingYearBase = class
     ID: integer;
-    StartDate:  TNullableInteger;
+    StartDate: TNullableInteger;
     EndDate: TNullableInteger;
   end;
 
@@ -103,11 +103,11 @@ type
   public
     Account: TSieAccountBase;
     Objects: TListSieObjectBase;
-    Amount: Currency;
-    RowDate:integer;
+    Amount: currency;
+    RowDate: integer;
     Text: string;
     Quantity: TNullableCurrency;
-    CreatedBy : string;
+    CreatedBy: string;
     Token: string;
   end;
 
@@ -122,12 +122,12 @@ type
     CreatedBy: string;
     Token: string;
     Rows: TListSieVoucherRowBase;
-    constructor Create(); virtual;abstract;
+    constructor Create(); virtual; abstract;
   end;
 
   TSieError = class
-    public
-      Message:string
+  public
+    Message: string
   end;
 
 implementation
