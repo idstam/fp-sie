@@ -35,26 +35,6 @@
         <UnitName Value="TestSieDocument"/>
       </Unit>
       <Unit>
-        <Filename Value="..\src\usiedocument.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="USieDocument"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\src\usiecompany.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="USieCompany"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\src\usieaccount.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="USieAccount"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\src\usiedimension.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="USieDimension"/>
-      </Unit>
-      <Unit>
         <Filename Value="..\src\usieobject.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieObject"/>
@@ -65,16 +45,6 @@
         <UnitName Value="USieClasses"/>
       </Unit>
       <Unit>
-        <Filename Value="..\src\usieperiodvalue.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="USiePeriodValue"/>
-      </Unit>
-      <Unit>
-        <Filename Value="..\src\usiebookingyear.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="USieBookingYear"/>
-      </Unit>
-      <Unit>
         <Filename Value="..\src\usievoucher.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieVoucher"/>
@@ -83,6 +53,11 @@
         <Filename Value="..\src\usiedataitem.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieDataItem"/>
+      </Unit>
+      <Unit>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieDocumentReader"/>
       </Unit>
     </Units>
   </ProjectOptions>

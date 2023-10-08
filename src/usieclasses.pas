@@ -8,22 +8,34 @@ uses
   Classes, SysUtils, Generics.Collections, Nullable;
 
 type
-  TSieObjectBase = class;
-  TSieDimensionBase = class;
-  TSieVoucherRowBase = class;
+  TSieObject = class;
+  TSieDimension = class;
+  TSieVoucherRow = class;
+  TSieAccount = class;
+  TSieBookingYear = class;
+  TSiePeriodValue = class;
+  TSieVoucher = class;
+  TSieError = class;
 
   THashSetString = specialize THashSet<string>;
-  THashSetSieDimensionBase = specialize THashSet<TSieDimensionBase>;
+  THashSetSieDimension = specialize THashSet<TSieDimension>;
 
   TNullableCurrency = specialize TNullable<currency>;
   TNullableInteger = specialize TNullable<integer>;
 
-  TListSieObjectBase = specialize TList<TSieObjectBase>;
-  TListSieVoucherRowBase = specialize TList<TSieVoucherRowBase>;
+  TListSieObject = specialize TList<TSieObject>;
+  TListSieVoucherRow = specialize TList<TSieVoucherRow>;
 
-  TDictStringSieObjectBase = specialize TDictionary<string, TSieObjectBase>;
+  TDictStringSieObject = specialize TDictionary<string, TSieObject>;
+  TDictStringString = specialize TDictionary<string, string>;
+  TDictStringSieAccount = specialize TDictionary<string, TSieAccount>;
+  TDictStringSieDimension = specialize TDictionary<string, TSieDimension>;
+  TDictStringSieBookingYear = specialize TDictionary<string, TSieBookingYear>;
+  TListSiePeriodValue = specialize TList<TSiePeriodValue>;
+  TListSieVoucher = specialize TList<TSieVoucher>;
+  TListSieError = specialize TList<TSieError>;
 
-  TSieAccountBase = class
+  TSieAccount = class
   private
   public
     Number: string;
@@ -31,11 +43,12 @@ type
     AccUnit: string;
     AccType: string;
     SRU: THashSetString;
+    constructor Create(aNumber:string);
   end;
 
-  TSieCompanyBase = class
+  TSieCompany = class
   private
-
+    orgTypeNames: TDictStringString;
   public
     //#BKOD
     SNI: integer;
@@ -57,52 +70,54 @@ type
     Street: string;
     ZipCity: string;
     Phone: string;
-
+    constructor Create();
   end;
 
-  TSieDimensionBase = class
+  TSieDimension = class
   private
-    _parent: TSieDimensionBase;
+    _parent: TSieDimension;
   public
     Number: string;
     Name: string;
     IsDefault: boolean;
-    SubDim: THashSetSieDimensionBase;
-    Objects: TDictStringSieObjectBase;
+    SubDim: THashSetSieDimension;
+    Objects: TDictStringSieObject;
+    constructor Create(aNumber: string; aName: string; aIsDefault: boolean);
+    constructor Create(aNumber: string; aName: string; aParent: TSieDimension;aIsDefault: boolean);
   end;
 
-  TSieObjectBase = class
+  TSieObject = class
   private
   public
-    Dimension: TSieDimensionBase;
+    Dimension: TSieDimension;
     Number: string;
     Name: string;
   end;
 
-  TSiePeriodValueBase = class
+  TSiePeriodValue = class
   private
   public
-    Account: TSieAccountBase;
+    Account: TSieAccount;
     YearNr: integer;
     Period: integer;
     Amount: currency;
     Quantity: TNullableCurrency;
-    Objects: TListSieObjectBase;
+    Objects: TListSieObject;
     Token: string;
-    function ToVoucherRow(): TSieDimensionBase; virtual; abstract;
+    function ToVoucherRow(): TSieDimension; virtual; abstract;
   end;
 
-  TSieBookingYearBase = class
+  TSieBookingYear = class
     ID: integer;
     StartDate: TNullableInteger;
     EndDate: TNullableInteger;
   end;
 
-  TSieVoucherRowBase = class
+  TSieVoucherRow = class
   private
   public
-    Account: TSieAccountBase;
-    Objects: TListSieObjectBase;
+    Account: TSieAccount;
+    Objects: TListSieObject;
     Amount: currency;
     RowDate: integer;
     Text: string;
@@ -111,7 +126,7 @@ type
     Token: string;
   end;
 
-  TSieVoucherBase = class
+  TSieVoucher = class
   private
   public
     Series: string;
@@ -121,15 +136,101 @@ type
     CreatedDate: integer;
     CreatedBy: string;
     Token: string;
-    Rows: TListSieVoucherRowBase;
-    constructor Create(); virtual; abstract;
+    Rows: TListSieVoucherRow;
+    constructor Create();
   end;
 
-  TSieError = class
+  TSieDocument = class
+  private
   public
-    Message: string
+    DateFormat: string;
+    FNAMN: TSieCompany;
+    KONTO: TDictStringSieAccount;
+    DIM: TDictStringSieDimension;
+    OIB: TListSiePeriodValue;
+    OUB: TListSiePeriodValue;
+    PSALDO: TListSiePeriodValue;
+    PBUDGET: TListSiePeriodValue;
+    //#PROGRAM
+    PROGRAMS: TStringList;
+    RAR: TDictStringSieBookingYear;
+    IB: TListSiePeriodValue;
+    UB: TListSiePeriodValue;
+    RES: TListSiePeriodValue;
+    VER: TListSieVoucher;
+    ValidationErrors: TListSieError;
+    //CRC
+    constructor Create();
+  published
+
   end;
+
+    TSieError = class
+    public
+      Message: string;
+      constructor Create(aMessage: string);
+    end;
 
 implementation
+  constructor TSieAccount.Create(aNumber:string);
+  begin
+       Number := aNumber;
+  end;
+
+  constructor TSieCompany.Create();
+  begin
+    self.orgTypeNames := TDictStringString.Create();
+    orgTypeNames.Add('AB', 'Aktiebolag.');
+    orgTypeNames.Add('E', 'Enskild näringsidkare.');
+    orgTypeNames.Add('HB', 'Handelsbolag.');
+    orgTypeNames.Add('KB', 'Kommanditbolag.');
+    orgTypeNames.Add('EK', 'Ekonomisk förening.');
+    orgTypeNames.Add('KHF', 'Kooperativ hyresrättsförening.');
+    orgTypeNames.Add('BRF', 'Bostadsrättsförening.');
+    orgTypeNames.Add('BF', 'Bostadsförening.');
+    orgTypeNames.Add('SF', 'Sambruksförening.');
+    orgTypeNames.Add('I', 'Ideell förening som bedriver näring.');
+    orgTypeNames.Add('S', 'Stiftelse som bedriver näring.');
+    orgTypeNames.Add('FL', 'Filial till utländskt bolag.');
+    orgTypeNames.Add('BAB', 'Bankaktiebolag.');
+    orgTypeNames.Add('MB', 'Medlemsbank.');
+    orgTypeNames.Add('SB', 'Sparbank.');
+    orgTypeNames.Add('BFL', 'Utländsk banks filial.');
+    orgTypeNames.Add('FAB', 'Försäkringsaktiebolag.');
+    orgTypeNames.Add('OFB', 'Ömsesidigt försäkringsbolag.');
+    orgTypeNames.Add('SE', 'Europabolag.');
+    orgTypeNames.Add('SCE', 'Europakooperativ.');
+    orgTypeNames.Add('TSF', 'Trossamfund.');
+    orgTypeNames.Add('X', 'Annan företagsform.');
+  end;
+
+  constructor TSieVoucher.Create();
+  begin
+     self.Rows := TListSieVoucherRow.Create();
+  end;
+  constructor TSieError.Create(aMessage: string);
+  begin
+    Message := aMessage;
+  end;
+
+  constructor TSieDimension.Create(aNumber: string; aName: string; aIsDefault: boolean);
+  begin
+    Number := aNumber;
+    Name := aName;
+    IsDefault := aIsDefault;
+  end;
+
+  constructor TSieDimension.Create(aNumber: string; aName: string; aParent: TSieDimension; aIsDefault: boolean);
+  begin
+    Number := aNumber;
+    Name := aName;
+    IsDefault := aIsDefault;
+  end;
+
+  constructor TSieDocument.Create();
+begin
+  self.DateFormat := 'yyyyMMdd';
+
+end;
 
 end.

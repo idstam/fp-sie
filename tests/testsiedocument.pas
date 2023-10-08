@@ -5,7 +5,7 @@ unit TestSieDocument;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, USieDocument;
+  Classes, SysUtils, fpcunit, testutils, testregistry, USieClasses,USieDocumentReader;
 
 type
 
@@ -20,15 +20,16 @@ implementation
 procedure TTestSieDocument.TestGetVersion;
 var
   doc: TSieDocument;
+  reader: TSieDocumentReader;
   appFolder: string;
   version: integer;
 begin
   appFolder := ExtractFilePath(ExtractFilePath(ParamStr(0)));
-  version := TSieDocument.GetSieVersion(appfolder + DirectorySeparator +
+  version := TSieDocumentReader.GetSieVersion(appfolder + DirectorySeparator +
     'sie_test_files' + DirectorySeparator + 'BokslutSIE1.se');
   AssertEquals(1, version);
 
-  version := TSieDocument.GetSieVersion(appfolder + DirectorySeparator +
+  version := TSieDocumentReader.GetSieVersion(appfolder + DirectorySeparator +
     'sie_test_files' + DirectorySeparator + 'MAMUT_SIE3_EXPORT.SE');
   AssertEquals(3, version);
 

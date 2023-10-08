@@ -4,12 +4,9 @@ program fpcunitproject1;
 
 uses
   Classes,
-  USieDocument,
   consoletestrunner,
   TestSieDocument,
-  USieCompany,
-  USieVoucher,
-  USieBookingYear,
+  USieClasses,
   USieDataItem;
 
 type

@@ -4,14 +4,16 @@ unit USieDataItem;
 
 interface
 
+
 uses
-  Classes, SysUtils, USieClasses, USieDocument;
+  Classes, SysUtils, USieClasses;
 
 type
   TSieDataItem = class
   private
     class function FirstWhiteSpace(aStr: string): integer;
     class function SplitLine(aLine: string): TStringList;
+
   public
     Document: TSieDocument;
     ItemType: string;
@@ -20,6 +22,7 @@ type
     constructor Create(aLine: string);
     constructor Create(aLine: string; aDocument: TSieDocument);
     function GetInt(aIndex: integer): integer;
+    function GetString(aIndex: integer): string;
   end;
 
 implementation
@@ -56,6 +59,12 @@ function TSieDataItem.GetInt(aIndex: integer): integer;
 begin
   if Data.Count <= aIndex then exit(0);
   exit(StrToIntDef(Data[aIndex], 0));
+end;
+
+function TSieDataItem.GetString(aIndex: integer): string;
+begin
+  if Data.Count <= aIndex then exit('');
+  exit(Data[aIndex]);
 end;
 
 class function TSieDataItem.FirstWhiteSpace(aStr: string): integer;

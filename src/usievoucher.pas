@@ -8,11 +8,11 @@ uses
   Classes, SysUtils, USieClasses;
 
 type
-  TSieVoucherRow = class(TSieVoucherRowBase)
+  TSieVoucherRow = class(TSieVoucherRow)
 
   end;
 
-  TSieVoucher = class(TSieVoucherBase)
+  TSieVoucher = class(TSieVoucher)
   public
     constructor Create(); override;
   end;
@@ -21,7 +21,8 @@ implementation
 
 constructor TSieVoucher.Create();
 begin
-  self.Rows := TListSieVoucherRowBase.Create();
+  self.Rows := TListSieVoucherRow.Create();
 end;
 
 end.
+
