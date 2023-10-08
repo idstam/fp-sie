@@ -5,7 +5,7 @@ unit USieDocumentReader;
 interface
 
 uses
-  Classes, SysUtils, USieClasses,USieDataItem;
+  Classes, SysUtils, USieClasses,USieDataItem, LConvEncoding;
 
 type
   TSieDocumentReader = class
@@ -90,6 +90,7 @@ var
   pv: TSiePeriodValue;
   fileName:string;
   ret:TsieDocument;
+  codePagedLine:string;
 begin
   ret := TSieDocument.Create();
   firstLine := true;
@@ -100,7 +101,9 @@ begin
   Reset(F);
   while not EOF(F) do
   begin
-    ReadLn(F, line);
+    ReadLn(F, codePagedLine);
+    line := CP437ToUTF8(codePagedLine);
+
     di := TSieDataItem.Create(line, ret);
     if firstLine then
     begin
@@ -115,7 +118,7 @@ begin
     //Add #KSUMMA to CRC
 
     case di.ItemType of
-      '#ADDRESS': begin
+      '#ADRESS': begin
         ret.FNAMN.Contact := di.GetString(0);
         ret.FNAMN.Street := di.GetString(1);
         ret.FNAMN.ZipCity := di.GetString(2);
@@ -126,6 +129,28 @@ begin
       end;
       '#BTRANS': begin
         parseTrans(ret,di, curVoucher);
+      end;
+      '#FLAGGA': begin
+        ret.FLAGGA := di.GetInt(0);
+      end;
+      '#FNR': begin
+        ret.FNAMN.OrgType := di.GetString(0);
+      end;
+      '#FORMAT': begin
+        ret.FORMAT := di.GetString(0);
+      end;
+      '#GEN': begin
+        ret.GEN_DATE := di.GetDate(0);
+        ret.GEN_NAMN := di.GetString(0);
+      end;
+      '#ORGNR': begin
+        ret.FNAMN.OrgIdentifier := di.GetString(0);
+      end;
+      '#PROGRAM': begin
+        ret.PROGRAMS := di.Data;
+      end;
+      '#SIETYP': begin
+        ret.SIETYP := di.GetInt(0);
       end;
     else
       begin

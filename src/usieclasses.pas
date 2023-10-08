@@ -144,21 +144,26 @@ type
   private
   public
     DateFormat: string;
-    FNAMN: TSieCompany;
-    KONTO: TDictStringSieAccount;
     DIM: TDictStringSieDimension;
+    FLAGGA:integer;
+    FNAMN: TSieCompany;
+    FORMAT: string;
+    GEN_DATE:string;
+    GEN_NAMN:string;
+    IB: TListSiePeriodValue;
+    KONTO: TDictStringSieAccount;
     OIB: TListSiePeriodValue;
     OUB: TListSiePeriodValue;
-    PSALDO: TListSiePeriodValue;
     PBUDGET: TListSiePeriodValue;
     //#PROGRAM
     PROGRAMS: TStringList;
+    PSALDO: TListSiePeriodValue;
     RAR: TDictStringSieBookingYear;
-    IB: TListSiePeriodValue;
-    UB: TListSiePeriodValue;
     RES: TListSiePeriodValue;
-    VER: TListSieVoucher;
+    SIETYP:integer;
+    UB: TListSiePeriodValue;
     ValidationErrors: TListSieError;
+    VER: TListSieVoucher;
     //CRC
     constructor Create();
   published

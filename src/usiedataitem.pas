@@ -23,6 +23,7 @@ type
     constructor Create(aLine: string; aDocument: TSieDocument);
     function GetInt(aIndex: integer): integer;
     function GetString(aIndex: integer): string;
+    function GetDate(aIndex: integer): string;
   end;
 
 implementation
@@ -66,6 +67,13 @@ begin
   if Data.Count <= aIndex then exit('');
   exit(Data[aIndex]);
 end;
+
+function TSieDataItem.GetDate(aIndex: integer): string;
+begin
+  if Data.Count <= aIndex then exit('');
+  exit(Data[aIndex]);
+end;
+
 
 class function TSieDataItem.FirstWhiteSpace(aStr: string): integer;
 var

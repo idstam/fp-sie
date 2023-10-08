@@ -12,6 +12,7 @@ type
   TTestSieDocument = class(TTestCase)
   published
     procedure TestGetVersion;
+    procedure TestCompany;
     procedure TestHookUp;
   end;
 
@@ -19,14 +20,15 @@ implementation
 
 procedure TTestSieDocument.TestGetVersion;
 var
-  doc: TSieDocument;
-  reader: TSieDocumentReader;
+
   appFolder: string;
   version: integer;
 begin
   appFolder := ExtractFilePath(ExtractFilePath(ParamStr(0)));
+
+
   version := TSieDocumentReader.GetSieVersion(appfolder + DirectorySeparator +
-    'sie_test_files' + DirectorySeparator + 'BokslutSIE1.se');
+    'sie_test_files' + DirectorySeparator + 'BL0001_typ1.SE');
   AssertEquals(1, version);
 
   version := TSieDocumentReader.GetSieVersion(appfolder + DirectorySeparator +
@@ -35,7 +37,19 @@ begin
 
 end;
 
+procedure TTestSieDocument.TestCompany;
+var
+  doc: TSieDocument;
+  reader: TSieDocumentReader;
+  appFolder: string;
 
+begin
+  appFolder := ExtractFilePath(ExtractFilePath(ParamStr(0)));
+  reader := TSieDocumentReader.Create();
+  doc := reader.ReadDocument(appfolder + DirectorySeparator +    'sie_test_files' + DirectorySeparator + 'BL0001_typ1.SE');
+  AssertEquals('Flottbrovägen 14', doc.FNAMN.Street);
+
+end;
 procedure TTestSieDocument.TestHookUp;
 var
   doc: TSieDocument;
