@@ -45,7 +45,7 @@ var
 
 begin
   appFolder := ExtractFilePath(ExtractFilePath(ParamStr(0)));
-  reader := TSieDocumentReader.Create();
+  reader := TSieDocumentReader.Create(false);
   doc := reader.ReadDocument(appfolder + DirectorySeparator +    'sie_test_files' + DirectorySeparator + 'BL0001_typ1.SE');
   AssertEquals('Flottbrovägen 14', doc.FNAMN.Street);
 

@@ -152,16 +152,21 @@ type
     GEN_NAMN:string;
     IB: TListSiePeriodValue;
     KONTO: TDictStringSieAccount;
+    KPTYP:string;
+    OMFATTN:string;
     OIB: TListSiePeriodValue;
     OUB: TListSiePeriodValue;
     PBUDGET: TListSiePeriodValue;
     //#PROGRAM
     PROGRAMS: TStringList;
+    PROSA:string;
     PSALDO: TListSiePeriodValue;
     RAR: TDictStringSieBookingYear;
     RES: TListSiePeriodValue;
     SIETYP:integer;
+    TAXAR:integer;
     UB: TListSiePeriodValue;
+    VALUTA:string;
     ValidationErrors: TListSieError;
     VER: TListSieVoucher;
     //CRC

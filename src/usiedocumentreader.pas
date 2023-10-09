@@ -10,9 +10,26 @@ uses
 type
   TSieDocumentReader = class
   private
+    IgnoreBtrans:boolean;
     procedure initializeFields(aDoc:TSieDocument);
-    procedure parseTrans(aDoc:TSieDocument;aDataItem: TSieDataItem; aCurVoucher: TSieVoucher);
+    procedure parseTRANS(aDoc:TSieDocument;aDataItem: TSieDataItem; aCurVoucher: TSieVoucher);
+    procedure parseDimension(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseEnhet(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseIB(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseUB(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseKONTO(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseKSUMMA(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseKTYP(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseOBJEKT(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    function parseOIB_OUB(aDoc: TSieDocument; aDataItem: TSieDataItem):TSiePeriodValue;
+    function parsePBUDGET_PSALDO(aDoc: TSieDocument; aDataItem: TSieDataItem):TSiePeriodValue;
+    procedure parseRAR(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseSRU(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    procedure parseRES(aDoc: TSieDocument; aDataItem: TSieDataItem);
+    function parseVER(aDoc: TSieDocument; aDataItem: TSieDataItem):TSieVoucher;
+    procedure closeVoucher(aDoc: TSieDocument; aVoucher: TSieVoucher);
   public
+    constructor Create(aIgnoreBtrans:boolean);
     function CreateSieDocument():TSieDocument;
     function ReadDocument(aFileName: string):TSieDocument;
 
@@ -21,6 +38,10 @@ type
 
 
 implementation
+constructor TSieDocumentReader.Create(aIgnoreBtrans:boolean);
+begin
+  IgnoreBtrans := aIgnoreBtrans;
+end;
 
 function TSieDocumentReader.CreateSieDocument():TSieDocument;
 var
@@ -96,7 +117,7 @@ begin
   firstLine := true;
   fileName := afileName;
   initializeFields(ret);
-  curVoucher := TSieVoucher.Create();
+  curVoucher := nil;
   AssignFile(F, aFileName);
   Reset(F);
   while not EOF(F) do
@@ -128,10 +149,19 @@ begin
         ret.FNAMN.SNI := di.GetInt(0);
       end;
       '#BTRANS': begin
-        parseTrans(ret,di, curVoucher);
+        if (not IgnoreBtrans) then parseTrans(ret,di, curVoucher);
+      end;
+      '#DIM': begin
+        parseDimension(ret,di);
+      end;
+      '#ENHET': begin
+        parseEnhet(ret,di);
       end;
       '#FLAGGA': begin
         ret.FLAGGA := di.GetInt(0);
+      end;
+      '#FNAMN': begin
+        ret.FNAMN.Name := di.GetString(0);
       end;
       '#FNR': begin
         ret.FNAMN.OrgType := di.GetString(0);
@@ -139,19 +169,111 @@ begin
       '#FORMAT': begin
         ret.FORMAT := di.GetString(0);
       end;
+      '#FTYP': begin
+        ret.FNAMN.OrgType := di.GetString(0);
+      end;
       '#GEN': begin
         ret.GEN_DATE := di.GetDate(0);
         ret.GEN_NAMN := di.GetString(0);
       end;
+      '#IB': begin
+        parseIB(ret,di);
+      end;
+      '#KONTO': begin
+        parseKONTO(ret,di);
+      end;
+      '#KSUMMA': begin
+        //TODO: Handle CRC
+        parseKSUMMA(ret,di);
+      end;
+      '#KPTYP': begin
+        ret.KPTYP := di.GetString(0);
+      end;
+      '#KTYP': begin
+        parseKTYP(ret,di);
+      end;
+      '#OJEKT': begin
+        parseOBJEKT(ret, di)
+      end;
+      '#OIB': begin
+        pv:= parseOIB_OUB(ret, di);
+        //TODO: Handle streaming callback
+        ret.OIB.Add(pv);
+      end;
+      '#OUB': begin
+        pv:= parseOIB_OUB(ret, di);
+        //TODO: Handle streaming callback
+        ret.OUB.Add(pv);
+      end;
       '#ORGNR': begin
         ret.FNAMN.OrgIdentifier := di.GetString(0);
+      end;
+      '#OMFATTNI': begin
+        ret.OMFATTN := di.GetDate(0);
+      end;
+      '#PBUDGET': begin
+        pv := parsePBUDGET_PSALDO(ret, di);
+        if pv <> nil then
+        begin
+          //TODO: Handle streaming
+          ret.PBUDGET.Add(pv);
+        end;
       end;
       '#PROGRAM': begin
         ret.PROGRAMS := di.Data;
       end;
+      '#PROSA': begin
+        ret.PROSA := di.GetString(0);
+      end;
+      '#PSALDO': begin
+        pv := parsePBUDGET_PSALDO(ret, di);
+        if pv <> nil then
+        begin
+          //TODO: Handle streaming
+          ret.PSALDO.Add(pv);
+        end;
+      end;
+      '#RAR': begin
+        parseRAR(ret, di);
+      end;
+      '#RES': begin
+        parseRES(ret, di);
+      end;
+      '#RTRANS': begin
+        if (not IgnoreBtrans) then parseTrans(ret,di, curVoucher);
+      end;
       '#SIETYP': begin
         ret.SIETYP := di.GetInt(0);
       end;
+      '#SRU': begin
+        parseSRU(ret, di);
+      end;
+      '#TAXAR': begin
+        ret.TAXAR := di.GetInt(0);
+      end;
+      '#UB': begin
+        parseUB(ret, di);
+      end;
+      '#TRANS': begin
+        parseTRANS(ret, di, curVoucher);
+      end;
+      '#VALUTA': begin
+        ret.VALUTA := di.GetString(0);
+      end;
+      '#VER': begin
+        curVoucher := parseVER(ret, di);
+      end;
+      '': begin
+        //Empty line
+      end;
+      '{': begin
+        //Empty line
+      end;
+      '}': begin
+        if curVoucher <> nil then closeVoucher(ret, curVoucher);
+        curVoucher := nil;
+      end;
+
     else
       begin
         ret.ValidationErrors.Add(TSieError.Create('ItemType not  implemented:' + di.ItemType));
@@ -160,6 +282,68 @@ begin
     end;
   end;
   exit(ret);
+end;
+
+procedure TSieDocumentReader.parseDimension(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+
+procedure TSieDocumentReader.parseEnhet(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+procedure TSieDocumentReader.parseIB(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+procedure TSieDocumentReader.parseUB(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+procedure TSieDocumentReader.parseKONTO(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+procedure TSieDocumentReader.parseKSUMMA(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+procedure TSieDocumentReader.parseKTYP(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+procedure TSieDocumentReader.parseOBJEKT(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+function TSieDocumentReader.parseOIB_OUB(aDoc: TSieDocument; aDataItem: TSieDataItem):TSiePeriodValue;
+begin
+
+end;
+function TSieDocumentReader.parsePBUDGET_PSALDO(aDoc: TSieDocument; aDataItem: TSieDataItem):TSiePeriodValue;
+begin
+
+end;
+procedure TSieDocumentReader.parseRAR(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+procedure TSieDocumentReader.parseSRU(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+procedure TSieDocumentReader.parseRES(aDoc: TSieDocument; aDataItem: TSieDataItem);
+begin
+
+end;
+function TSieDocumentReader.parseVER(aDoc: TSieDocument; aDataItem: TSieDataItem):TSieVoucher;
+begin
+
+end;
+procedure TSieDocumentReader.closeVoucher(aDoc: TSieDocument; aVoucher: TSieVoucher);
+begin
+
 end;
 
 class function TSieDocumentReader.GetSieVersion(aFileName: string): integer; static;
