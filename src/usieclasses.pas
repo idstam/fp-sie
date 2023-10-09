@@ -104,7 +104,6 @@ type
     Quantity: TNullableCurrency;
     Objects: TListSieObject;
     Token: string;
-    function ToVoucherRow(): TSieDimension; virtual; abstract;
   end;
 
   TSieBookingYear = class

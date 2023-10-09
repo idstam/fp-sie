@@ -311,14 +311,46 @@ var
   konto: TSieAccount;
 begin
   if aDoc.KONTO.ContainsKey(aDataItem.GetString(0)) then
-    konto := aDoc.KONTO
+  begin
+    konto := aDoc.KONTO[aDataItem.GetString(0)];
+  end
+  else
+  begin
+    konto := TSieAccount.Create(aDataItem.GetString(0));
+  end;
+
+  konto.AccUnit := aDataItem.GetString(1);
+  aDoc.KONTO.AddOrSetValue(aDataItem.GetString(0), konto);
 end;
 procedure TSieDocumentReader.parseIB(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  v:TSiePeriodValue;
 begin
+  aDoc.KONTO.TryAdd(aDataItem.GetString(1), TSieAccount.Create(aDataItem.GetString(1)));
+  v := TSiePeriodValue.Create();
+  v.YearNr := aDataItem.GetInt(0);
+  v.Account := aDoc.KONTO[aDataItem.GetString(1)];
+  v.Amount := aDataItem.GetDecimal(2);
+  v.Quantity := aDataItem.GetDecimal(3);
+  v.Token := aDataItem.ItemType;
+  //TODO: Handle callbacks
 
+  aDoc.IB.Add(v);
 end;
 procedure TSieDocumentReader.parseUB(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  v:TSiePeriodValue;
 begin
+  aDoc.KONTO.TryAdd(aDataItem.GetString(1), TSieAccount.Create(aDataItem.GetString(1)));
+  v := TSiePeriodValue.Create();
+  v.YearNr := aDataItem.GetInt(0);
+  v.Account := aDoc.KONTO[aDataItem.GetString(1)];
+  v.Amount := aDataItem.GetDecimal(2);
+  v.Quantity := aDataItem.GetDecimal(3);
+  v.Token := aDataItem.ItemType;
+  //TODO: Handle callbacks
+
+  aDoc.IB.Add(v);
 
 end;
 procedure TSieDocumentReader.parseKONTO(aDoc: TSieDocument; aDataItem: TSieDataItem);

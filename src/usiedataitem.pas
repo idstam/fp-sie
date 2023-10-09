@@ -24,6 +24,7 @@ type
     function GetInt(aIndex: integer): integer;
     function GetString(aIndex: integer): string;
     function GetDate(aIndex: integer): string;
+    function GetDecimal(aIndex: integer): currency;
   end;
 
 implementation
@@ -73,7 +74,12 @@ begin
   if Data.Count <= aIndex then exit('');
   exit(Data[aIndex]);
 end;
+function TSieDataItem.GetDecimal(aIndex: integer): currency;
+begin
+  if Data.Count <= aIndex then exit(0);
+  exit(StrToCurrDef(Data[aIndex], 0));
 
+end;
 
 class function TSieDataItem.FirstWhiteSpace(aStr: string): integer;
 var
