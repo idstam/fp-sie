@@ -109,8 +109,8 @@ type
 
   TSieBookingYear = class
     ID: integer;
-    StartDate: TNullableInteger;
-    EndDate: TNullableInteger;
+    StartDate: string;
+    EndDate: string;
   end;
 
   TSieVoucherRow = class

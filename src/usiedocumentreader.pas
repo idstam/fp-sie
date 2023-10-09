@@ -285,13 +285,33 @@ begin
 end;
 
 procedure TSieDocumentReader.parseDimension(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  d:string;
+  n:string;
+  dim:TSieDimension;
 begin
+  d := aDataItem.GetString(0);
+  n := aDataItem.GetString(1);
+  if(aDoc.DIM.ContainsKey(d)) then
+  begin
+    dim := aDoc.DIM[d];
+    dim.Name := n;
+    dim.IsDefault:=false;
+  end
+  else
+  begin
+    dim := TSieDimension.Create(d, n, False);
+  end;
 
+  aDoc.DIM.AddOrSetValue(d, dim)
 end;
 
 procedure TSieDocumentReader.parseEnhet(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  konto: TSieAccount;
 begin
-
+  if aDoc.KONTO.ContainsKey(aDataItem.GetString(0)) then
+    konto := aDoc.KONTO
 end;
 procedure TSieDocumentReader.parseIB(aDoc: TSieDocument; aDataItem: TSieDataItem);
 begin
@@ -326,8 +346,14 @@ begin
 
 end;
 procedure TSieDocumentReader.parseRAR(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  rar:TSieBookingYear;
 begin
-
+  rar := TSieBookingYear.Create();
+  rar.ID := aDataItem.GetInt(0);
+  rar.StartDate := aDataItem.GetDate(1);
+  rar.EndDate := aDataItem.GetDate(2);
+  aDoc.RAR.AddOrSetValue(aDataItem.GetString(0), rar);
 end;
 procedure TSieDocumentReader.parseSRU(aDoc: TSieDocument; aDataItem: TSieDataItem);
 begin
