@@ -105,6 +105,7 @@ type
     Quantity: TNullableCurrency;
     Objects: TListSieObject;
     Token: string;
+    constructor Create();
   end;
 
   TSieBookingYear = class
@@ -143,6 +144,9 @@ type
   TSieDocument = class
   private
   public
+    FileName:string;
+    IgnoreRTRANS:boolean;
+    IgnoreBTRANS:boolean;
     DateFormat: string;
     DIM: TDictStringSieDimension;
     FLAGGA:integer;
@@ -184,9 +188,15 @@ type
     end;
 
 implementation
+  constructor TSiePeriodValue.Create();
+  begin
+    Objects:= TListSieObject.Create();
+  end;
+
   constructor TSieAccount.Create(aNumber:string);
   begin
        Number := aNumber;
+       SRU:= THashSetString.Create;
   end;
 
   constructor TSieCompany.Create();
@@ -218,7 +228,7 @@ implementation
 
   constructor TSieVoucher.Create();
   begin
-     self.Rows := TListSieVoucherRow.Create();
+     Rows := TListSieVoucherRow.Create();
   end;
   constructor TSieError.Create(aMessage: string);
   begin

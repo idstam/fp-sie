@@ -109,13 +109,11 @@ var
   di: TSieDataItem;
   F: Text;
   pv: TSiePeriodValue;
-  fileName:string;
   ret:TsieDocument;
   codePagedLine:string;
 begin
   ret := TSieDocument.Create();
   firstLine := true;
-  fileName := afileName;
   initializeFields(ret);
   curVoucher := nil;
   AssignFile(F, aFileName);
@@ -281,6 +279,7 @@ begin
       end;
     end;
   end;
+  ret.FileName:= aFileName;
   exit(ret);
 end;
 
@@ -512,8 +511,24 @@ begin
   exit(v);
 end;
 procedure TSieDocumentReader.closeVoucher(aDoc: TSieDocument; aVoucher: TSieVoucher);
+var
+  check:currency;
+  r:TSieVoucherRow;
 begin
-  here i am
+  check := 0;
+  for r in aVoucher.Rows do
+  begin
+    if (r.Token = '#RTRANS') and aDoc.IgnoreRTRANS then continue;
+    if (r.Token = '#BTRANS') and aDoc.IgnoreBTRANS then continue;
+    check += r.Amount;
+  end;
+
+  if check <> 0 then
+    begin
+      aDoc.ValidationErrors.Add(TSieError.Create('SieVoucherMissmatchException ' + aVoucher.Series + '.' + aVoucher.Number + ' Sum is not zero.'));
+    end;
+    //TODO:Handle callbacks
+  aDoc.VER.Add(aVoucher);
 end;
 
 class function TSieDocumentReader.GetSieVersion(aFileName: string): integer; static;

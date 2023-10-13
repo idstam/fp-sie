@@ -115,6 +115,7 @@ begin
   if idata = '--missing-object--' then
   begin
     Document.ValidationErrors.Add(TSieError.Create('SieMissingObjectException ' + RawData));
+    exit(nil);
   end;
   dimData := SplitLine(idata);
 
