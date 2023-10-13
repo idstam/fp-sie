@@ -354,28 +354,103 @@ begin
 
 end;
 procedure TSieDocumentReader.parseKONTO(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  konto:TSieAccount;
 begin
-
+  aDoc.KONTO.TryAdd(aDataItem.GetString(0), TSieAccount.Create(aDataItem.GetString(0)));
+  konto := aDoc.KONTO[aDataItem.GetString(0)];
+  konto.Name:=aDataItem.GetString(1);
+  aDoc.KONTO.AddOrSetValue(aDataItem.GetString(0), konto);
 end;
 procedure TSieDocumentReader.parseKSUMMA(aDoc: TSieDocument; aDataItem: TSieDataItem);
 begin
-
+  aDoc.KSUMMA := aDataItem.GetLong(0);
+  //TODO: Handle checksum
 end;
 procedure TSieDocumentReader.parseKTYP(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  konto:TSieAccount;
 begin
-
+  aDoc.KONTO.TryAdd(aDataItem.GetString(0), TSieAccount.Create(aDataItem.GetString(0)));
+  konto := aDoc.KONTO[aDataItem.GetString(0)];
+  konto.AccType:=aDataItem.GetString(1);
+  aDoc.KONTO.AddOrSetValue(aDataItem.GetString(0), konto);
 end;
 procedure TSieDocumentReader.parseOBJEKT(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  dimNumber:string;
+  number:string;
+  name:string;
+  dim:TSieDimension;
+  obj:TSieObject;
 begin
+  dimNumber := aDataItem.GetString(0);
+  number := aDataItem.GetString(1);
+  name := aDataItem.GetString(2);
 
+  aDoc.DIM.TryAdd(dimNumber, TSieDimension.Create(dimNumber, '', false));
+  dim :=  aDoc.DIM[dimNumber];
+  obj := TSieObject.Create();
+  obj.Dimension := dim;
+  obj.Number := number;
+  obj.Name := name;
+  aDoc.OBJEKT.AddOrSetValue(number, obj);
 end;
 function TSieDocumentReader.parseOIB_OUB(aDoc: TSieDocument; aDataItem: TSieDataItem):TSiePeriodValue;
+var
+  offset:integer;
+  v:TSiePeriodValue;
 begin
+  aDoc.KONTO.TryAdd(aDataItem.GetString(1), TSieAccount.Create(aDataItem.GetString(1)));
+  if aDoc.SIETYP < 3 then
+  begin
+    aDoc.ValidationErrors.Add(TSieError.Create('Neither OIB or OUB is part of SIE < 3'));
+  end;
+  offset := 0;
+  if aDataItem.RawData.Contains('{') then offset := 1;
 
+  v := TSiePeriodValue.Create();
+  v.YearNr := aDataItem.GetInt(0);
+  v.Account := aDoc.KONTO[aDataItem.GetString(1)];
+  v.Amount := aDataItem.GetDecimal(2 + offset);
+  v.Quantity := aDataItem.GetDecimal(3) + offset;
+  v.Objects := aDataItem.GetObjects();
+  v.Token := aDataItem.ItemType;
+  exit(v);
 end;
 function TSieDocumentReader.parsePBUDGET_PSALDO(aDoc: TSieDocument; aDataItem: TSieDataItem):TSiePeriodValue;
+var
+  offset:integer;
+  v:TSiePeriodValue;
 begin
+  aDoc.KONTO.TryAdd(aDataItem.GetString(1), TSieAccount.Create(aDataItem.GetString(1)));
+  if aDoc.SIETYP = 1 then
+  begin
+    aDoc.ValidationErrors.Add(TSieError.Create('Neither PSALDO or PBUDGET is part of SIE 1'));
+  end;
 
+  if (aDoc.SIETYP = 2) and (aDataItem.RawData.Contains('{')) and (not aDataItem.RawData.Contains('{}')) then
+    begin
+      //Applications reading SIE type 2 should ignore PSALDO containing non empty dimension.
+      exit(nil);
+  end;
+
+  offset := 0;
+  if aDataitem.RawData.Contains('{') then offset := 1;
+
+  v := TSiePeriodValue.Create();
+  v.YearNr := aDataItem.GetInt(0);
+  v.Period := aDataItem.GetInt(1);
+  v.Account := aDoc.KONTO[aDataItem.GetString(2)];
+  v.Amount := aDataItem.GetDecimal(3 + offset);
+  v.Quantity := aDataItem.GetDecimal(4) + offset;
+  v.Token := aDataItem.ItemType;
+
+  if (aDoc.SIETYP <> 2) and (aDataItem.RawData.Contains('{')) then
+    begin
+      v.Objects := aDataItem.GetObjects();
+    end;
+  exit(v);
 end;
 procedure TSieDocumentReader.parseRAR(aDoc: TSieDocument; aDataItem: TSieDataItem);
 var
@@ -387,21 +462,58 @@ begin
   rar.EndDate := aDataItem.GetDate(2);
   aDoc.RAR.AddOrSetValue(aDataItem.GetString(0), rar);
 end;
-procedure TSieDocumentReader.parseSRU(aDoc: TSieDocument; aDataItem: TSieDataItem);
-begin
-
-end;
 procedure TSieDocumentReader.parseRES(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  offset:integer;
+  v:TSiePeriodValue;
 begin
+  aDoc.KONTO.TryAdd(aDataItem.GetString(1), TSieAccount.Create(aDataItem.GetString(1)));
+
+  offset := 0;
+  if aDataItem.RawData.Contains('{') then offset := 1;
+
+  v := TSiePeriodValue.Create();
+  v.YearNr := aDataItem.GetInt(0);
+  v.Account := aDoc.KONTO[aDataItem.GetString(1)];
+  v.Amount := aDataItem.GetDecimal(2 + offset);
+  v.Quantity := aDataItem.GetDecimal(3) + offset;
+  v.Objects := aDataItem.GetObjects();
+  v.Token := aDataItem.ItemType;
+  aDoc.RES.Add(v);
+  //TODO:Callback
 
 end;
-function TSieDocumentReader.parseVER(aDoc: TSieDocument; aDataItem: TSieDataItem):TSieVoucher;
-begin
 
+procedure TSieDocumentReader.parseSRU(aDoc: TSieDocument; aDataItem: TSieDataItem);
+var
+  konto:TSieAccount;
+begin
+  aDoc.KONTO.TryAdd(aDataItem.GetString(0), TSieAccount.Create(aDataItem.GetString(0)));
+  konto := aDoc.KONTO[aDataItem.GetString(0)];
+  konto.SRU.Add(aDataItem.GetString(1));
+
+end;
+
+function TSieDocumentReader.parseVER(aDoc: TSieDocument; aDataItem: TSieDataItem):TSieVoucher;
+var
+  v:TSieVoucher;
+begin
+  if aDataItem.GetDate(2) = '' then aDoc.ValidationErrors.Add(TSieError.Create('MissingFieldException VoucherDate'));
+
+  v:= TSieVoucher.Create();
+  v.Series := aDataItem.GetString(0);
+  v.Number := aDataItem.GetString(1);
+  v.VoucherDate := aDataItem.GetDate(2);
+  v.Text := aDataItem.GetString(3);
+  v.CreatedDate := aDataItem.GetDate(4);
+  v.CreatedBy := aDataItem.GetString(5);
+  v.Token := aDataItem.ItemType;
+
+  exit(v);
 end;
 procedure TSieDocumentReader.closeVoucher(aDoc: TSieDocument; aVoucher: TSieVoucher);
 begin
-
+  here i am
 end;
 
 class function TSieDocumentReader.GetSieVersion(aFileName: string): integer; static;

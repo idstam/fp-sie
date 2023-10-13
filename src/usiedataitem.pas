@@ -22,9 +22,11 @@ type
     constructor Create(aLine: string);
     constructor Create(aLine: string; aDocument: TSieDocument);
     function GetInt(aIndex: integer): integer;
+    function GetLong(aIndex: integer): LongInt;
     function GetString(aIndex: integer): string;
     function GetDate(aIndex: integer): string;
     function GetDecimal(aIndex: integer): currency;
+    function GetObjects():TListSieObject;
   end;
 
 implementation
@@ -63,6 +65,13 @@ begin
   exit(StrToIntDef(Data[aIndex], 0));
 end;
 
+function TSieDataItem.GetLong(aIndex: integer): LongInt;
+begin
+  if Data.Count <= aIndex then exit(0);
+  exit(StrToIntDef(Data[aIndex], 0));
+end;
+
+
 function TSieDataItem.GetString(aIndex: integer): string;
 begin
   if Data.Count <= aIndex then exit('');
@@ -79,6 +88,53 @@ begin
   if Data.Count <= aIndex then exit(0);
   exit(StrToCurrDef(Data[aIndex], 0));
 
+end;
+function TSieDataItem.GetObjects():TListSieObject;
+var
+  dimNumber:string;
+  objectNumber:string;
+  ret:TListSieObject;
+  idata:string;
+  item:string;
+  dimData:TStringList;
+  dim:TSieDimension;
+  i:integer;
+  tmpObj:TSieObject;
+begin
+  idata := '--missing-object--';
+  if RawData.Contains('{}') then exit(nil);
+  for item in Data do
+  begin
+    if item.StartsWith('{')then
+    begin
+      idata := item.Trim.Replace('{', '').Replace('}','');
+      break;
+    end;
+  end;
+
+  if idata = '--missing-object--' then
+  begin
+    Document.ValidationErrors.Add(TSieError.Create('SieMissingObjectException ' + RawData));
+  end;
+  dimData := SplitLine(idata);
+
+  ret := TListSieObject.Create();
+  for i := 0 to dimData.Count-1 do
+  begin
+    if (i mod 2) = 1 then continue;
+    dimNumber := dimData[i];
+    Document.DIM.TryAdd(dimNumber, TSieDimension.Create(dimNumber, '[TEMP]', false));
+    dim := Document.DIM[dimNumber];
+    objectNumber := dimData[i+1];
+    tmpObj := TSieObject.Create();
+    tmpObj.Number:=objectNumber;
+    tmpObj.Dimension := dim;
+    tmpObj.Name := '[TEMP]';
+    dim.Objects.TryAdd(objectNumber, TSieObject.Create());
+    ret.Add(tmpObj);
+  end;
+
+  exit(ret);
 end;
 
 class function TSieDataItem.FirstWhiteSpace(aStr: string): integer;

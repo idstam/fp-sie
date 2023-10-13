@@ -29,6 +29,7 @@ type
   TDictStringSieObject = specialize TDictionary<string, TSieObject>;
   TDictStringString = specialize TDictionary<string, string>;
   TDictStringSieAccount = specialize TDictionary<string, TSieAccount>;
+
   TDictStringSieDimension = specialize TDictionary<string, TSieDimension>;
   TDictStringSieBookingYear = specialize TDictionary<string, TSieBookingYear>;
   TListSiePeriodValue = specialize TList<TSiePeriodValue>;
@@ -130,9 +131,9 @@ type
   public
     Series: string;
     Number: string;
-    VoucherDate: integer;
+    VoucherDate: string;
     Text: string;
-    CreatedDate: integer;
+    CreatedDate: string;
     CreatedBy: string;
     Token: string;
     Rows: TListSieVoucherRow;
@@ -151,8 +152,10 @@ type
     GEN_NAMN:string;
     IB: TListSiePeriodValue;
     KONTO: TDictStringSieAccount;
+    KSUMMA:LongInt;
     KPTYP:string;
     OMFATTN:string;
+    OBJEKT:TDictStringSieObject;
     OIB: TListSiePeriodValue;
     OUB: TListSiePeriodValue;
     PBUDGET: TListSiePeriodValue;

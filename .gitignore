@@ -7,3 +7,4 @@
 tests/fpcunitproject1
 tests/fpcunitproject1.exe
 tests/lib/x86_64-win64/
+out/

@@ -8,10 +8,9 @@
       <Unit>
         <Filename Value="fpcunitproject1.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="20" Y="14"/>
-        <UsageCount Value="149"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="154"/>
       </Unit>
       <Unit>
         <Filename Value="testsiedocument.pas"/>
@@ -20,7 +19,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="27"/>
         <CursorPos X="44" Y="48"/>
-        <UsageCount Value="149"/>
+        <UsageCount Value="154"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\usieobject.pas"/>
@@ -28,46 +27,46 @@
         <UnitName Value="USieObject"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="32" Y="8"/>
-        <UsageCount Value="146"/>
+        <UsageCount Value="151"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\usieclasses.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieClasses"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="86"/>
-        <CursorPos Y="107"/>
-        <UsageCount Value="125"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="116"/>
+        <CursorPos X="24" Y="136"/>
+        <UsageCount Value="130"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\usievoucher.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieVoucher"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="3"/>
         <CursorPos X="34" Y="24"/>
-        <UsageCount Value="123"/>
+        <UsageCount Value="128"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\usiedataitem.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieDataItem"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="65"/>
-        <CursorPos X="23" Y="77"/>
-        <UsageCount Value="98"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="109"/>
+        <CursorPos Y="136"/>
+        <UsageCount Value="103"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="..\src\usiedocumentreader.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieDocumentReader"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="328"/>
-        <CursorPos Y="354"/>
+        <TopLine Value="486"/>
+        <CursorPos X="17" Y="506"/>
         <FoldState Value=" T0kCH591B131D Pj2k1B@"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -160,123 +159,124 @@
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="24" Column="88"/>
+        <Filename Value="..\src\usieclasses.pas"/>
+        <Caret Line="154" Column="20" TopLine="136"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="324" Column="111" TopLine="300"/>
+        <Caret Line="367" Column="39" TopLine="348"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="68" Column="6" TopLine="56"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="320" Column="10" TopLine="300"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="320" Column="9" TopLine="300"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="324" Column="9" TopLine="304"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="30" Column="71" TopLine="10"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="336" Column="21" TopLine="320"/>
+        <Caret Line="396" Column="20" TopLine="371"/>
       </Position>
       <Position>
         <Filename Value="..\src\usieclasses.pas"/>
-        <Caret Line="169" Column="19" TopLine="135"/>
+        <Caret Line="32" Column="67" TopLine="13"/>
       </Position>
       <Position>
-        <Filename Value="..\src\usiedataitem.pas"/>
-        <Caret Line="74" Column="30" TopLine="39"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedataitem.pas"/>
-        <Caret Line="71" Column="23" TopLine="51"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedataitem.pas"/>
-        <Caret Line="26" Column="56"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedataitem.pas"/>
-        <Caret Line="73" Column="59" TopLine="53"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedataitem.pas"/>
-        <Caret Line="74" Column="8" TopLine="53"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedataitem.pas"/>
-        <Caret Line="26" Column="46"/>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <Caret Line="397" Column="42" TopLine="367"/>
       </Position>
       <Position>
         <Filename Value="..\src\usieclasses.pas"/>
-        <Caret Line="113" Column="20" TopLine="88"/>
+        <Caret Line="158" Column="33" TopLine="138"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="336" Column="42" TopLine="316"/>
+        <Caret Line="391" Column="73" TopLine="371"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="302" Column="44" TopLine="260"/>
+        <Caret Line="418" Column="11" TopLine="390"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="298" Column="15" TopLine="278"/>
+        <Caret Line="413" Column="21" TopLine="393"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="314" Column="48" TopLine="297"/>
+        <Caret Line="415" Column="44" TopLine="394"/>
       </Position>
       <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="316" Column="6" TopLine="304"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="319" Column="56" TopLine="305"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="322" Column="32" TopLine="308"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="327" Column="87" TopLine="313"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="334" Column="30" TopLine="320"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="335" Column="33" TopLine="317"/>
-      </Position>
-      <Position>
-        <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="332" Column="36" TopLine="318"/>
+        <Filename Value="..\src\usieclasses.pas"/>
+        <Caret Line="158" Column="33" TopLine="21"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedataitem.pas"/>
-        <Caret Line="27" Column="5" TopLine="7"/>
+        <Caret Line="96" Column="22" TopLine="69"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedataitem.pas"/>
-        <Caret Line="80" Column="21" TopLine="56"/>
+        <Caret Line="99" Column="3" TopLine="78"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="100" Column="17" TopLine="78"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="111" Column="18" TopLine="91"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="120" Column="29" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="118" Column="30" TopLine="99"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="121" Column="5" TopLine="102"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="134" Column="18" TopLine="105"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="126" Column="83" TopLine="107"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedataitem.pas"/>
+        <Caret Line="132" Column="29" TopLine="114"/>
       </Position>
       <Position>
         <Filename Value="..\src\usiedocumentreader.pas"/>
-        <Caret Line="354" Column="11" TopLine="328"/>
+        <Caret Line="431" Column="17" TopLine="394"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <Caret Line="445" Column="10" TopLine="426"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <Caret Line="444" TopLine="426"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <Caret Line="499" Column="114" TopLine="487"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <Caret Line="410" Column="16" TopLine="390"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <Caret Line="439" Column="16" TopLine="419"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <Caret Line="473" Column="15" TopLine="453"/>
+      </Position>
+      <Position>
+        <Filename Value="..\src\usiedocumentreader.pas"/>
+        <Caret Line="506" Column="11" TopLine="486"/>
       </Position>
     </JumpHistory>
     <RunParams>
