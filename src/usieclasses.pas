@@ -44,7 +44,7 @@ type
     AccUnit: string;
     AccType: string;
     SRU: THashSetString;
-    constructor Create(aNumber:string);
+    constructor Create(aNumber: string);
   end;
 
   TSieCompany = class
@@ -84,7 +84,8 @@ type
     SubDim: THashSetSieDimension;
     Objects: TDictStringSieObject;
     constructor Create(aNumber: string; aName: string; aIsDefault: boolean);
-    constructor Create(aNumber: string; aName: string; aParent: TSieDimension;aIsDefault: boolean);
+    constructor Create(aNumber: string; aName: string;
+      aParent: TSieDimension; aIsDefault: boolean);
   end;
 
   TSieObject = class
@@ -144,35 +145,37 @@ type
   TSieDocument = class
   private
   public
-    FileName:string;
-    IgnoreRTRANS:boolean;
-    IgnoreBTRANS:boolean;
+    FileName: string;
+    IgnoreRTRANS: boolean;
+    IgnoreBTRANS: boolean;
+    IgnoreMissingDate: boolean;
+    IgnoreMissingOMFATTNING: boolean;
     DateFormat: string;
     DIM: TDictStringSieDimension;
-    FLAGGA:integer;
+    FLAGGA: integer;
     FNAMN: TSieCompany;
     FORMAT: string;
-    GEN_DATE:string;
-    GEN_NAMN:string;
+    GEN_DATE: string;
+    GEN_NAMN: string;
     IB: TListSiePeriodValue;
     KONTO: TDictStringSieAccount;
-    KSUMMA:LongInt;
-    KPTYP:string;
-    OMFATTN:string;
-    OBJEKT:TDictStringSieObject;
+    KSUMMA: longint;
+    KPTYP: string;
+    OMFATTN: string;
+    OBJEKT: TDictStringSieObject;
     OIB: TListSiePeriodValue;
     OUB: TListSiePeriodValue;
     PBUDGET: TListSiePeriodValue;
     //#PROGRAM
     PROGRAMS: TStringList;
-    PROSA:string;
+    PROSA: string;
     PSALDO: TListSiePeriodValue;
     RAR: TDictStringSieBookingYear;
     RES: TListSiePeriodValue;
-    SIETYP:integer;
-    TAXAR:integer;
+    SIETYP: integer;
+    TAXAR: integer;
     UB: TListSiePeriodValue;
-    VALUTA:string;
+    VALUTA: string;
     ValidationErrors: TListSieError;
     VER: TListSieVoucher;
     //CRC
@@ -181,75 +184,86 @@ type
 
   end;
 
-    TSieError = class
-    public
-      Message: string;
-      constructor Create(aMessage: string);
-    end;
+  TErrorTypes = (SieInvalidChecksumError, SieInvalidFileError,
+    SieDateError, SieInvalidFeatureError,
+    SieMissingMandatoryDateError, SieMissingObjectError, SieVoucherMissmatchError,
+    SieNotImplementedError,
+    SieMissingFieldError);
+
+  TSieError = class
+  public
+    Error: TErrorTypes;
+    Message: string;
+    constructor Create(aError: TErrorTypes; aMessage: string);
+  end;
 
 implementation
-  constructor TSiePeriodValue.Create();
-  begin
-    Objects:= TListSieObject.Create();
-  end;
 
-  constructor TSieAccount.Create(aNumber:string);
-  begin
-       Number := aNumber;
-       SRU:= THashSetString.Create;
-  end;
+constructor TSiePeriodValue.Create();
+begin
+  Objects := TListSieObject.Create();
+end;
 
-  constructor TSieCompany.Create();
-  begin
-    self.orgTypeNames := TDictStringString.Create();
-    orgTypeNames.Add('AB', 'Aktiebolag.');
-    orgTypeNames.Add('E', 'Enskild näringsidkare.');
-    orgTypeNames.Add('HB', 'Handelsbolag.');
-    orgTypeNames.Add('KB', 'Kommanditbolag.');
-    orgTypeNames.Add('EK', 'Ekonomisk förening.');
-    orgTypeNames.Add('KHF', 'Kooperativ hyresrättsförening.');
-    orgTypeNames.Add('BRF', 'Bostadsrättsförening.');
-    orgTypeNames.Add('BF', 'Bostadsförening.');
-    orgTypeNames.Add('SF', 'Sambruksförening.');
-    orgTypeNames.Add('I', 'Ideell förening som bedriver näring.');
-    orgTypeNames.Add('S', 'Stiftelse som bedriver näring.');
-    orgTypeNames.Add('FL', 'Filial till utländskt bolag.');
-    orgTypeNames.Add('BAB', 'Bankaktiebolag.');
-    orgTypeNames.Add('MB', 'Medlemsbank.');
-    orgTypeNames.Add('SB', 'Sparbank.');
-    orgTypeNames.Add('BFL', 'Utländsk banks filial.');
-    orgTypeNames.Add('FAB', 'Försäkringsaktiebolag.');
-    orgTypeNames.Add('OFB', 'Ömsesidigt försäkringsbolag.');
-    orgTypeNames.Add('SE', 'Europabolag.');
-    orgTypeNames.Add('SCE', 'Europakooperativ.');
-    orgTypeNames.Add('TSF', 'Trossamfund.');
-    orgTypeNames.Add('X', 'Annan företagsform.');
-  end;
+constructor TSieAccount.Create(aNumber: string);
+begin
+  Number := aNumber;
+  SRU := THashSetString.Create;
+end;
 
-  constructor TSieVoucher.Create();
-  begin
-     Rows := TListSieVoucherRow.Create();
-  end;
-  constructor TSieError.Create(aMessage: string);
-  begin
-    Message := aMessage;
-  end;
+constructor TSieCompany.Create();
+begin
+  self.orgTypeNames := TDictStringString.Create();
+  orgTypeNames.Add('AB', 'Aktiebolag.');
+  orgTypeNames.Add('E', 'Enskild näringsidkare.');
+  orgTypeNames.Add('HB', 'Handelsbolag.');
+  orgTypeNames.Add('KB', 'Kommanditbolag.');
+  orgTypeNames.Add('EK', 'Ekonomisk förening.');
+  orgTypeNames.Add('KHF', 'Kooperativ hyresrättsförening.');
+  orgTypeNames.Add('BRF', 'Bostadsrättsförening.');
+  orgTypeNames.Add('BF', 'Bostadsförening.');
+  orgTypeNames.Add('SF', 'Sambruksförening.');
+  orgTypeNames.Add('I', 'Ideell förening som bedriver näring.');
+  orgTypeNames.Add('S', 'Stiftelse som bedriver näring.');
+  orgTypeNames.Add('FL', 'Filial till utländskt bolag.');
+  orgTypeNames.Add('BAB', 'Bankaktiebolag.');
+  orgTypeNames.Add('MB', 'Medlemsbank.');
+  orgTypeNames.Add('SB', 'Sparbank.');
+  orgTypeNames.Add('BFL', 'Utländsk banks filial.');
+  orgTypeNames.Add('FAB', 'Försäkringsaktiebolag.');
+  orgTypeNames.Add('OFB', 'Ömsesidigt försäkringsbolag.');
+  orgTypeNames.Add('SE', 'Europabolag.');
+  orgTypeNames.Add('SCE', 'Europakooperativ.');
+  orgTypeNames.Add('TSF', 'Trossamfund.');
+  orgTypeNames.Add('X', 'Annan företagsform.');
+end;
 
-  constructor TSieDimension.Create(aNumber: string; aName: string; aIsDefault: boolean);
-  begin
-    Number := aNumber;
-    Name := aName;
-    IsDefault := aIsDefault;
-  end;
+constructor TSieVoucher.Create();
+begin
+  Rows := TListSieVoucherRow.Create();
+end;
 
-  constructor TSieDimension.Create(aNumber: string; aName: string; aParent: TSieDimension; aIsDefault: boolean);
-  begin
-    Number := aNumber;
-    Name := aName;
-    IsDefault := aIsDefault;
-  end;
+constructor TSieError.Create(aError: TErrorTypes; aMessage: string);
+begin
+  Error := aError;
+  Message := aMessage;
+end;
 
-  constructor TSieDocument.Create();
+constructor TSieDimension.Create(aNumber: string; aName: string; aIsDefault: boolean);
+begin
+  Number := aNumber;
+  Name := aName;
+  IsDefault := aIsDefault;
+end;
+
+constructor TSieDimension.Create(aNumber: string; aName: string;
+  aParent: TSieDimension; aIsDefault: boolean);
+begin
+  Number := aNumber;
+  Name := aName;
+  IsDefault := aIsDefault;
+end;
+
+constructor TSieDocument.Create();
 begin
   self.DateFormat := 'yyyyMMdd';
 

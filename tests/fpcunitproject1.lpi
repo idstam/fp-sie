@@ -62,6 +62,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieDocumentReader"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\usiecallbacks.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieCallbacks"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

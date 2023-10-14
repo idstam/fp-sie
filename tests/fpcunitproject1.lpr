@@ -7,7 +7,8 @@ uses
   consoletestrunner,
   TestSieDocument,
   USieClasses,
-  USieDataItem;
+  USieDataItem,
+  USieCallbacks;
 
 type
 

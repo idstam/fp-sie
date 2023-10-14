@@ -5,7 +5,8 @@ unit TestSieDocument;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, USieClasses,USieDocumentReader;
+  Classes, SysUtils, fpcunit, testutils, testregistry,
+  USieClasses, USieDocumentReader, USieCallbacks;
 
 type
 
@@ -45,11 +46,13 @@ var
 
 begin
   appFolder := ExtractFilePath(ExtractFilePath(ParamStr(0)));
-  reader := TSieDocumentReader.Create(false);
-  doc := reader.ReadDocument(appfolder + DirectorySeparator +    'sie_test_files' + DirectorySeparator + 'BL0001_typ1.SE');
+  reader := TSieDocumentReader.Create(TSieCallbackBase.Create);
+  doc := reader.ReadDocument(appfolder + DirectorySeparator +
+    'sie_test_files' + DirectorySeparator + 'BL0001_typ1.SE', False, False, False, False, true);
   AssertEquals('Flottbrovägen 14', doc.FNAMN.Street);
 
 end;
+
 procedure TTestSieDocument.TestHookUp;
 var
   doc: TSieDocument;
