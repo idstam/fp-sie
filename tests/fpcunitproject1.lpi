@@ -67,6 +67,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="USieCallbacks"/>
       </Unit>
+      <Unit>
+        <Filename Value="..\src\usiedocumentwriter.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieDocumentWriter"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

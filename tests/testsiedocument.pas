@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry,
-  USieClasses, USieDocumentReader, USieCallbacks;
+  USieClasses, USieDocumentReader, USieCallbacks, USieDocumentWriter;
 
 type
 
@@ -14,6 +14,7 @@ type
   published
     procedure TestGetVersion;
     procedure TestCompany;
+    procedure TestSimpleWrite;
     procedure TestHookUp;
   end;
 
@@ -43,13 +44,37 @@ var
   doc: TSieDocument;
   reader: TSieDocumentReader;
   appFolder: string;
-
 begin
   appFolder := ExtractFilePath(ExtractFilePath(ParamStr(0)));
   reader := TSieDocumentReader.Create(TSieCallbackBase.Create);
   doc := reader.ReadDocument(appfolder + DirectorySeparator +
     'sie_test_files' + DirectorySeparator + 'BL0001_typ1.SE', False, False, False, False, true);
   AssertEquals('Flottbrovägen 14', doc.FNAMN.Street);
+
+end;
+
+procedure TTestSieDocument.TestSimpleWrite;
+var
+  doc: TSieDocument;
+  reader: TSieDocumentReader;
+  appFolder: string;
+  outFileName:string;
+  writer:TSieDocumentWriter;
+begin
+  appFolder := ExtractFilePath(ExtractFilePath(ParamStr(0)));
+  reader := TSieDocumentReader.Create(TSieCallbackBase.Create);
+  doc := reader.ReadDocument(appfolder + DirectorySeparator +
+    'sie_test_files' + DirectorySeparator + 'BL0001_typ1.SE', False, False, False, False, true);
+  outFileName := GetTempFileName(appFolder, '');
+  DeleteFile(outFileName);
+
+  try
+    writer := TSieDocumentWriter.Create();
+    writer.Write(doc, outFileName);
+    AssertTrue(FileExists(outFileName));
+  finally
+    DeleteFile(outFileName);
+  end;
 
 end;
 

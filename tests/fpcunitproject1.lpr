@@ -8,7 +8,7 @@ uses
   TestSieDocument,
   USieClasses,
   USieDataItem,
-  USieCallbacks;
+  USieCallbacks, USieDocumentWriter;
 
 type
 

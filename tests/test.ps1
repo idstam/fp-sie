@@ -1,0 +1,1 @@
+ while ($true) { ./fpcunitproject1.exe -a --format=plain| Out-Host; Sleep 60rm .\TMP00000.tmp; Clear }
