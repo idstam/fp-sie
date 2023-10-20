@@ -65,6 +65,7 @@ begin
   begin
     aDoc.KONTO.AddOrSetValue(aDataItem.GetString(0),
       TSieAccount.Create(aDataItem.GetString(0)));
+    here i am
   end;
 end;
 
@@ -74,6 +75,7 @@ begin
   aDoc.FNAMN := TSieCompany.Create();
   aDoc.KONTO := TDictStringSieAccount.Create();
   aDoc.DIM := TDictStringSieDimension.Create();
+  aDoc.OBJEKT := TListSieObject.Create();
   aDoc.OIB := TListSiePeriodValue.Create();
   aDoc.OUB := TListSiePeriodValue.Create();
   aDoc.PSALDO := TListSiePeriodValue.Create();
@@ -117,7 +119,7 @@ var
   curVoucher: TSieVoucher;
   line: string;
   di: TSieDataItem;
-  F: Text;
+  F: TextFile;
   pv: TSiePeriodValue;
   ret: TsieDocument;
   codePagedLine: string;
@@ -127,6 +129,7 @@ begin
   ret.IgnoreRTRANS := aIgnoreRtrans;
   ret.IgnoreMissingOMFATTNING:=aIgnoreMissingOMFATTNING;
   ret.IgnoreMissingDate:=aIgnoreMissingDate;
+
   doSaveValues := aDoSaveValues;
   firstLine := True;
   initializeFields(ret);
@@ -137,6 +140,9 @@ begin
   begin
     ReadLn(F, codePagedLine);
     line := CP437ToUTF8(codePagedLine);
+
+    writeLn(line);
+
     callbacks.Line(line);
 
     di := TSieDataItem.Create(line, ret);
@@ -180,7 +186,7 @@ begin
         ret.FNAMN.Name := di.GetString(0);
       end;
       '#FNR': begin
-        ret.FNAMN.OrgType := di.GetString(0);
+        ret.FNAMN.Code := di.GetString(0);
       end;
       '#FORMAT': begin
         ret.FORMAT := di.GetString(0);
@@ -190,7 +196,7 @@ begin
       end;
       '#GEN': begin
         ret.GEN_DATE := di.GetDate(0);
-        ret.GEN_NAMN := di.GetString(0);
+        ret.GEN_NAMN := di.GetString(1);
       end;
       '#IB': begin
         parseIB(ret, di);
@@ -208,7 +214,7 @@ begin
       '#KTYP': begin
         parseKTYP(ret, di);
       end;
-      '#OJEKT': begin
+      '#OBJEKT': begin
         parseOBJEKT(ret, di);
       end;
       '#OIB': begin
@@ -369,7 +375,7 @@ begin
   v.Token := aDataItem.ItemType;
   callbacks.UB(v);
 
-  if doSaveValues then aDoc.IB.Add(v);
+  if doSaveValues then aDoc.UB.Add(v);
 
 end;
 
@@ -417,7 +423,9 @@ begin
   obj.Dimension := dim;
   obj.Number := number;
   obj.Name := Name;
-  aDoc.OBJEKT.AddOrSetValue(number, obj);
+  dim.Objects.AddOrSetValue(number, obj);
+  aDoc.Dim.AddOrSetValue(dimNumber, dim);
+  aDoc.OBJEKT.Add(obj);
 end;
 
 function TSieDocumentReader.parseOIB_OUB(aDoc: TSieDocument;
@@ -452,7 +460,7 @@ var
   offset: integer;
   v: TSiePeriodValue;
 begin
-  aDoc.KONTO.TryAdd(aDataItem.GetString(1), TSieAccount.Create(aDataItem.GetString(1)));
+  aDoc.KONTO.TryAdd(aDataItem.GetString(2), TSieAccount.Create(aDataItem.GetString(2)));
   if aDoc.SIETYP = 1 then
   begin
     aDoc.ValidationErrors.Add(TSieError.Create(SieInvalidFeatureError,

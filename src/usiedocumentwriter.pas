@@ -19,7 +19,7 @@ type TSieDocumentWriter = class
     procedure writeVER(aDoc:TSieDocument);
     function getObjektLista(aDoc:TSieDocument; aValues:TListSieObject):string;
     function makeField(data:string):string;
-    function makeAmount(aAmount:currency):string;
+    function makeAmount(aAmount:double):string;
     function makeSieDate(data:string):string;
   public
     procedure Write(aDoc:TSieDocument; aFileName:string);
@@ -42,13 +42,14 @@ begin
   begin
     tmp+= makeField(s) + ' ';
   end;
-  writeLine('#PROGRAM "fp-sie" ' + tmp);
+  writeLine('#PROGRAM ' + tmp);
   writeLine('#FORMAT PC8');
-  writeLine('#SIETYPE ' + IntToStr(aDoc.SIETYP));
+  writeLine('#GEN ' + aDoc.GEN_DATE + ' ' + aDoc.GEN_NAMN);
+  writeLine('#SIETYP ' + IntToStr(aDoc.SIETYP));
   if aDoc.PROSA <> '' then writeLine('#PROSA "' + aDoc.PROSA + '"');
-  if aDoc.FNAMN.Code <> '' then writeLine('#FNR "' + aDoc.FNAMN.Code + '"');
-  writeLine('#ORGNR ' + aDoc.FNAMN.OrgIdentifier + '"');
-  writeLine('#FNAMN ' + aDoc.FNAMN.Name + '"');
+  if aDoc.FNAMN.Code <> '' then writeLine('#FNR ' + aDoc.FNAMN.Code + '');
+  writeLine('#ORGNR "' + aDoc.FNAMN.OrgIdentifier + '"');
+  writeLine('#FNAMN "' + aDoc.FNAMN.Name + '"');
   tmp := aDoc.FNAMN.Contact + aDoc.FNAMN.Street + aDoc.FNAMN.ZipCity + aDoc.FNAMN.Phone;
   if tmp <> '' then
   begin
@@ -77,7 +78,8 @@ begin
       WritePeriodSaldo(aDoc, '#PSALDO', aDoc.PSALDO);
   end;
 
-  WritePeriodValue(aDoc, '#RES', aDoc.UB);
+  WritePeriodValue(aDoc, '#RES', aDoc.RES);
+  writeVER(aDoc);
   CloseFile(F);
 end;
 procedure TSieDocumentWriter.writeRAR(aDoc:TSieDocument);
@@ -164,6 +166,8 @@ var
   objekt:string;
   v:TSiePeriodValue;
 begin
+  objekt := '';
+
   for v in aValues do
   begin
     objekt := getObjektLista(aDoc, v.Objects);
@@ -178,6 +182,8 @@ var
 begin
   if aDoc.SIETYP < 3 then exit('');
 
+  if aValues = nil then exit('');
+
   ret := '{';
   for o in aValues do
   begin
@@ -190,11 +196,39 @@ begin
 end;
 
 procedure TSieDocumentWriter.writeVER(aDoc:TSieDocument);
+var
+  v:TSieVoucher;
+  vr:TSieVoucherRow;
+  createdBy:string;
+  createdDate:string;
+  obj:string;
+  quantity:string;
 begin
-  HERE I AM
+  if aDoc.VER.Count = 0 then exit;
+  createdBy := '';
+  createdDate := '';
+
+  for v in aDoc.VER do
+  begin
+    if v.CreatedBy <> '' then createdBy := '"' + v.CreatedBy + '"';
+    if v.CreatedDate <> '' then createdDate := makeSieDate(v.CreatedDate);
+    writeLine('#VER "' + v.Series + '" "' + v.Number + '" ' + makeSieDate(v.VoucherDate) + ' "' + v.Text + '" ' + createdDate + ' ' + createdBy);
+
+    writeLine('{');
+
+    for vr in v.Rows do
+    begin
+      obj := getObjektLista(aDoc, vr.Objects);
+      if vr.Quantity.HasValue then quantity := '' else quantity := makeAmount(vr.Quantity) ;
+      if vr.CreatedBy <> '' then createdBy := '"' + vr.CreatedBy + '"';
+      writeLine(vr.Token +  ' ' + vr.Account.Number + ' ' + obj + ' ' + makeAmount(vr.Amount) + ' ' + makeSieDate(vr.RowDate) + ' "' + vr.Text + '" ' + quantity + ' ' + createdBy);
+    end;
+
+    writeLine('}');
+  end;
 end;
 
-function TSieDocumentWriter.makeAmount(aAmount:currency):string;
+function TSieDocumentWriter.makeAmount(aAmount:double):string;
 begin
   exit(CurrToStr(aAmount).Replace(',', '.'));
 end;

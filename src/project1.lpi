@@ -6,11 +6,10 @@
     <General>
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
-        <MainUnitHasTitleStatement Value="False"/>
         <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="fp-sie"/>
+      <Title Value="My Application"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -24,16 +23,35 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
+    <RequiredPackages>
+      <Item>
+        <PackageName Value="LazUtils"/>
+      </Item>
+    </RequiredPackages>
     <Units>
       <Unit>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="fpsie"/>
       </Unit>
       <Unit>
-        <Filename Value="usiedocument.pas"/>
+        <Filename Value="usiedocumentreader.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="USieDocument"/>
+        <UnitName Value="USieDocumentReader"/>
+      </Unit>
+      <Unit>
+        <Filename Value="usiedocumentwriter.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieDocumentWriter"/>
+      </Unit>
+      <Unit>
+        <Filename Value="usieclasses.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieClasses"/>
+      </Unit>
+      <Unit>
+        <Filename Value="usiedataitem.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="USieDataItem"/>
       </Unit>
     </Units>
   </ProjectOptions>
@@ -47,13 +65,10 @@
       <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
-    <CodeGeneration>
-      <RelocatableUnit Value="True"/>
-    </CodeGeneration>
     <Linking>
-      <Options>
-        <ExecutableType Value="Library"/>
-      </Options>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
     </Linking>
   </CompilerOptions>
   <Debugging>

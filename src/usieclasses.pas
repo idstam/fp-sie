@@ -20,7 +20,7 @@ type
   THashSetString = specialize THashSet<string>;
   THashSetSieDimension = specialize THashSet<TSieDimension>;
 
-  TNullableCurrency = specialize TNullable<currency>;
+  TNullableCurrency = specialize TNullable<double>;
   TNullableInteger = specialize TNullable<integer>;
 
   TListSieObject = specialize TList<TSieObject>;
@@ -102,7 +102,7 @@ type
     Account: TSieAccount;
     YearNr: integer;
     Period: integer;
-    Amount: currency;
+    Amount: double;
     Quantity: TNullableCurrency;
     Objects: TListSieObject;
     Token: string;
@@ -120,8 +120,8 @@ type
   public
     Account: TSieAccount;
     Objects: TListSieObject;
-    Amount: currency;
-    RowDate: integer;
+    Amount: double;
+    RowDate: string;
     Text: string;
     Quantity: TNullableCurrency;
     CreatedBy: string;
@@ -162,7 +162,7 @@ type
     KSUMMA: longint;
     KPTYP: string;
     OMFATTN: string;
-    OBJEKT: TDictStringSieObject;
+    OBJEKT: TListSieObject;
     OIB: TListSiePeriodValue;
     OUB: TListSiePeriodValue;
     PBUDGET: TListSiePeriodValue;
@@ -253,6 +253,7 @@ begin
   Number := aNumber;
   Name := aName;
   IsDefault := aIsDefault;
+  Objects := TDictStringSieObject.Create();
 end;
 
 constructor TSieDimension.Create(aNumber: string; aName: string;
@@ -261,6 +262,7 @@ begin
   Number := aNumber;
   Name := aName;
   IsDefault := aIsDefault;
+  Objects := TDictStringSieObject.Create();
 end;
 
 constructor TSieDocument.Create();

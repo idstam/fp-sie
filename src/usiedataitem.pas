@@ -25,7 +25,7 @@ type
     function GetLong(aIndex: integer): longint;
     function GetString(aIndex: integer): string;
     function GetDate(aIndex: integer): string;
-    function GetDecimal(aIndex: integer): currency;
+    function GetDecimal(aIndex: integer): double;
     function GetObjects(): TListSieObject;
   end;
 
@@ -84,10 +84,16 @@ begin
   exit(Data[aIndex]);
 end;
 
-function TSieDataItem.GetDecimal(aIndex: integer): currency;
+function TSieDataItem.GetDecimal(aIndex: integer): double;
+var
+  tmpStr:string;
+  tmpCur:Currency;
 begin
   if Data.Count <= aIndex then exit(0);
-  exit(StrToCurrDef(Data[aIndex], 0));
+
+  tmpStr := StringReplace(Data[aIndex], '.', DefaultFormatSettings.DecimalSeparator, []);
+  tmpCur := StrToFloatDef(tmpStr, 0);
+  exit(tmpCur);
 
 end;
 
@@ -172,6 +178,7 @@ begin
   isInObject := False;
   isInField := 0;
   buffer := '';
+  skipNext:= False;
 
   for C in line do
   begin
