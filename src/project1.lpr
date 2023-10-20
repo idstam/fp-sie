@@ -32,17 +32,19 @@ var
   aDoc:TSieDocument;
   cb:TSieCallbackBase;
   fileName:string;
+  outFileName:string;
 begin
   fileName := ParamStr(1);
-  fileName := 'C:\Users\johan\src\idstam\fp-sie\tests\sie_test_files\BL0001_typ4.SE';
+  outFileName := ParamStr(2);
+  //fileName := 'C:\Users\johan\src\idstam\fp-sie\tests\sie_test_files\BL0001_typ4.SE';
   writeln('Reading ', fileName);
   cb := TSieCallbackBase.Create();
   rdr := TSieDocumentReader.Create(cb);
   aDoc := rdr.ReadDocument(fileName, false, false, false, false, true);
   writer := TSieDocumentWriter.Create();
-  DeleteFile('C:\Users\johan\src\idstam\fp-sie\src\ut.se');
-  writeLn('Writing ut.se');
-  writer.Write(aDoc, 'C:\Users\johan\src\idstam\fp-sie\src\ut.se');
+  DeleteFile(outFileName);
+  writeLn('Writing ', outFileName);
+  writer.Write(aDoc, outFileName);
 
   // stop program loop
   Terminate;

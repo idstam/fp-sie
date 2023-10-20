@@ -14,7 +14,7 @@ type
     doSaveValues:boolean;
     procedure initializeFields(aDoc: TSieDocument);
     procedure parseTRANS(aDoc: TSieDocument; aDataItem: TSieDataItem;
-      aCurVoucher: TSieVoucher);
+      aVoucher: TSieVoucher);
     procedure parseDimension(aDoc: TSieDocument; aDataItem: TSieDataItem);
     procedure parseEnhet(aDoc: TSieDocument; aDataItem: TSieDataItem);
     procedure parseIB(aDoc: TSieDocument; aDataItem: TSieDataItem);
@@ -58,15 +58,31 @@ begin
 end;
 
 
-procedure TSieDocumentReader.parseTrans(aDoc: TSieDocument; aDataItem: TSieDataItem;
-  aCurVoucher: TSieVoucher);
+procedure TSieDocumentReader.parseTrans(aDoc: TSieDocument; aDataItem: TSieDataItem; aVoucher: TSieVoucher);
+var
+  vr:TSieVoucherRow;
+  offset:integer;
 begin
   if (not aDoc.KONTO.ContainsKey(aDataItem.GetString(0))) then
   begin
     aDoc.KONTO.AddOrSetValue(aDataItem.GetString(0),
       TSieAccount.Create(aDataItem.GetString(0)));
-    here i am
   end;
+      if aDataItem.RawData.Contains('{') then offset := 1 else offset := 0;
+
+      vr:= TSieVoucherRow.Create();
+      vr.Account := aDoc.KONTO[aDataItem.GetString(0)];
+      vr.Objects := aDataItem.GetObjects();
+      vr.Amount := aDataItem.GetDecimal(1 + offset);
+      if aDataItem.GetDate(2 + offset) <> '' then vr.RowDate :=aDataItem.GetDate(2 + offset) else vr.RowDate :=aVoucher.VoucherDate;
+      vr.Text := aDataItem.GetString(3 + offset);
+      vr.Quantity := aDataItem.GetIntNull(4 + offset);
+      vr.CreatedBy := aDataItem.GetString(5 + offset);
+      vr.Token := aDataItem.ItemType;
+
+      aVoucher.Rows.Add(vr);
+
+
 end;
 
 procedure TSieDocumentReader.initializeFields(aDoc: TSieDocument);

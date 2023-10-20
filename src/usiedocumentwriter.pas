@@ -219,7 +219,7 @@ begin
     for vr in v.Rows do
     begin
       obj := getObjektLista(aDoc, vr.Objects);
-      if vr.Quantity.HasValue then quantity := '' else quantity := makeAmount(vr.Quantity) ;
+      if not vr.Quantity.HasValue then quantity := '' else quantity := makeAmount(vr.Quantity.Value) ;
       if vr.CreatedBy <> '' then createdBy := '"' + vr.CreatedBy + '"';
       writeLine(vr.Token +  ' ' + vr.Account.Number + ' ' + obj + ' ' + makeAmount(vr.Amount) + ' ' + makeSieDate(vr.RowDate) + ' "' + vr.Text + '" ' + quantity + ' ' + createdBy);
     end;

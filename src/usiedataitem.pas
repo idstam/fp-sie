@@ -22,6 +22,7 @@ type
     constructor Create(aLine: string);
     constructor Create(aLine: string; aDocument: TSieDocument);
     function GetInt(aIndex: integer): integer;
+    function GetIntNull(aIndex: integer): TNullableCurrency;
     function GetLong(aIndex: integer): longint;
     function GetString(aIndex: integer): string;
     function GetDate(aIndex: integer): string;
@@ -64,6 +65,15 @@ begin
   if Data.Count <= aIndex then exit(0);
   exit(StrToIntDef(Data[aIndex], 0));
 end;
+function TSieDataItem.GetIntNull(aIndex: integer): TNullableCurrency;
+var
+  ret:TNullableCurrency;
+begin
+
+  if Data.Count <= aIndex then exit(Default(TNullableCurrency));
+  exit(StrToIntDef(Data[aIndex], 0));
+end;
+
 
 function TSieDataItem.GetLong(aIndex: integer): longint;
 begin
@@ -182,7 +192,7 @@ begin
 
   for C in line do
   begin
-    if skipNext then
+    if skipNext and (C = '"') then
     begin
       skipNext := False;
       continue;
