@@ -157,8 +157,6 @@ begin
     ReadLn(F, codePagedLine);
     line := CP437ToUTF8(codePagedLine);
 
-    writeLn(line);
-
     callbacks.Line(line);
 
     di := TSieDataItem.Create(line, ret);

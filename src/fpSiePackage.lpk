@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="fpSiePackage"/>
+    <Type Value="RunTimeOnly"/>
+    <Author Value="Johan Idstam"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="."/>
+        <UnitOutputDirectory Value="lib\fpSie\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <CodeGeneration>
+        <Optimizations>
+          <OptimizationLevel Value="4"/>
+        </Optimizations>
+      </CodeGeneration>
+    </CompilerOptions>
+    <Description Value="Read and write SIE-files"/>
+    <License Value="MIT License"/>
+    <Version Major="1"/>
+    <Files Count="6">
+      <Item1>
+        <Filename Value="usiecallbacks.pas"/>
+        <UnitName Value="USieCallbacks"/>
+      </Item1>
+      <Item2>
+        <Filename Value="usieclasses.pas"/>
+        <UnitName Value="USieClasses"/>
+      </Item2>
+      <Item3>
+        <Filename Value="usiedataitem.pas"/>
+        <UnitName Value="USieDataItem"/>
+      </Item3>
+      <Item4>
+        <Filename Value="usiedocumentreader.pas"/>
+        <UnitName Value="USieDocumentReader"/>
+      </Item4>
+      <Item5>
+        <Filename Value="usiedocumentwriter.pas"/>
+        <UnitName Value="USieDocumentWriter"/>
+      </Item5>
+      <Item6>
+        <Filename Value="usieobject.pas"/>
+        <UnitName Value="USieObject"/>
+      </Item6>
+    </Files>
+    <CompatibilityMode Value="True"/>
+    <LazDoc PackageName="(default)"/>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="LazUtils"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
