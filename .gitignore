@@ -9,5 +9,5 @@ tests/fpcunitproject1.exe
 tests/lib/x86_64-win64/
 out/
 src/project1.exe
-src/lib/x86_64-win64/project1.compiled
-src/lib/x86_64-win64/project1.o
+src/lib/x86_64-win64/
+src/Packages/FPC/backup/
